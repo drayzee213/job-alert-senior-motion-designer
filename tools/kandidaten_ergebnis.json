@@ -1,0 +1,1001 @@
+[
+ {
+  "name": "Applimeda",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Duolingo",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "greenhouse",
+    "kennung": "duolingo",
+    "anzahl": 55,
+    "de": 0,
+    "beispiele": [
+     "Ad Sales Lead, Programmatic [New York, NY]",
+     "Ad Sales Lead - West [Remote - California]",
+     "AI Research Engineer, New PhD Graduate [New York, NY; Pittsburgh, PA]"
+    ],
+    "erkannt": true
+   }
+  ],
+  "andere_systeme": [
+   "breezy"
+  ],
+  "fehler": []
+ },
+ {
+  "name": "Babbel",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "ashby",
+    "kennung": "babbel",
+    "anzahl": 10,
+    "de": 8,
+    "beispiele": [
+     "Senior Product Manager - AI Content Creation (all genders) [Berlin]",
+     "Senior Principal Engineer – AI Content Systems (all genders) [Berlin]",
+     "Senior iOS Engineer – Learning Experience (all genders) [Berlin]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "simpleclub",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "join",
+    "kennung": "simpleclub",
+    "anzahl": 2,
+    "de": 2,
+    "beispiele": [
+     "Content Writer:in Pflege m/f/x - Teilzeit (Remote) [Berlin]",
+     "Sales Development - Werkstudent:in m/f/x (Remote) [Berlin]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "ANTON (solocode)",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "personio",
+    "kennung": "anton",
+    "anzahl": 8,
+    "de": 8,
+    "beispiele": [
+     "Initiativbewerbung [Berlin]",
+     "Internship: Creating Digital Learning Content (UK) [Berlin]",
+     "Junior Growth Marketer (w/m/d) [Berlin]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "sofatutor",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "recruitee",
+    "kennung": "sofatutor",
+    "anzahl": 1,
+    "de": 1,
+    "beispiele": [
+     "Initiativbewerbung [Homeoffice]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": [
+   {
+    "ok": false,
+    "system": "recruitee",
+    "kennung": "careers-analytics",
+    "fehler": "Recruitee careers-analytics: HTTP 403",
+    "erkannt": true
+   }
+  ]
+ },
+ {
+  "name": "Knowunity",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "ashby",
+    "kennung": "knowunity",
+    "anzahl": 6,
+    "de": 6,
+    "beispiele": [
+     "Engineering Intern [Berlin]",
+     "CEO Office Intern - Special Projects [Berlin]",
+     "Don't see your dream role? Convince us to create it. [Berlin]"
+    ],
+    "erkannt": true
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "StudySmarter",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "personio",
+    "kennung": "studysmarter",
+    "anzahl": 4,
+    "de": 3,
+    "beispiele": [
+     "(Junior) Campaign Manager (m/w/d) – remote [Remote (Deutschland), Bayern, Brandenburg, Berlin, Sachsen, Baden-Württemberg, Thüringen, NRW, Saarland, Mecklenburg-Vorpommern, Hamburg, Schleswig-Holstein, Hessen, Rheinland-Pfalz, Niedersachsen, Sachsen-Anhalt, Bremen]",
+     "Founders Associate – AI Marketing & Growth (m/w/d) [Bayern]",
+     "Praktikum Social Media & Growth Marketing (m/w/d) [Bayern, Brandenburg, Berlin, Sachsen, Baden-Württemberg, Thüringen, NRW, Saarland, Mecklenburg-Vorpommern, Hamburg, Schleswig-Holstein, Hessen, Rheinland-Pfalz, Niedersachsen, Sachsen-Anhalt, Bremen, Mobile]"
+    ],
+    "erkannt": true
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Lingoda",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "join",
+    "kennung": "lingoda",
+    "anzahl": 2,
+    "de": 0,
+    "beispiele": [
+     "DaF Lehrkraft bei Lingoda und GIFED (m/w/d) [Tunis]",
+     "DaF Lehrkraft in Indien (m/w/d) [Kochi]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Tandem",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "personio",
+    "kennung": "tandem",
+    "anzahl": 4,
+    "de": 4,
+    "beispiele": [
+     "DaF-Lehrer:in (Freiberufler:in, max. 28h/Monat) [remote]",
+     "DeutschConnect Ambassador (Freelance, regional) [remote]",
+     "Product Manager (parental leave cover) [Berlin]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Blinkist",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Sdui",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Quizlet",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Kaia Health",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "smartrecruiters",
+    "kennung": "kaiahealth",
+    "anzahl": 2,
+    "de": 2,
+    "beispiele": [
+     "Medical Sales Representative / Medizinprodukteberater [München, BY, Germany]",
+     "Medical Sales Representative / Medizinprodukteberater [München, BY, Germany]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Clue",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Ada Health",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "personio",
+    "kennung": "ada",
+    "anzahl": 1,
+    "de": 1,
+    "beispiele": [
+     "Initiativbewerbung [Remote]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "HelloBetter",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "personio",
+    "kennung": "geton",
+    "anzahl": 1,
+    "de": 1,
+    "beispiele": [
+     "(Senior) Regulatory Affairs Manager (d/f/m) [Remote, Hamburg, Berlin]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Selfapy",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Oviva",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "ashby",
+    "kennung": "oviva",
+    "anzahl": 31,
+    "de": 16,
+    "beispiele": [
+     "Werkstudent*in People Experience Team [Potsdam]",
+     "Werkstudent:in/Working Student People Experience Team (German speaking) [Potsdam]",
+     "Facharzt/Fachärztin mit Fähigkeitsausweis Endokrinologie & Diabetologie [Remote Switzerland]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "7Mind",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Mimi Hearing",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Fastic",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "YAZIO",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "ashby",
+    "kennung": "yazio",
+    "anzahl": 3,
+    "de": 3,
+    "beispiele": [
+     "Senior Mobile Engineer (Food Tracking) [Berlin, Frankfurt am Main, Barcelona, Munich, Lisbon, Madrid, Hamburg, Porto]",
+     "(Senior) Controller [Berlin, Barcelona, Lisbon, London]",
+     "Performance Marketing Manager [Berlin]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Freeletics",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "komoot",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Doctolib",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "ashby",
+    "kennung": "doctolib",
+    "anzahl": 151,
+    "de": 84,
+    "beispiele": [
+     "Account Executive - Köln (x/f/m) [Köln]",
+     "Responsable Partenaires Ecosystème Santé (x/f/m) [Paris]",
+     "Senior Machine Learning Engineer - Applied AI & LLMs (x/f/m) [Paris]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Avi Medical",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "greenhouse",
+    "kennung": "avimedical",
+    "anzahl": 42,
+    "de": 40,
+    "beispiele": [
+     "Ärztliche Leitung (m/w/d) in Hausarztpraxis [Berlin]",
+     "Ärztliche Leitung (m/w/d) in Hausarztpraxis ab Q2/2027 [Essen]",
+     "Empfangskraft  (m/w/d) in Berlin für hausärztliche Praxis [Berlin]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Mindable Health",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Wooga",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "greenhouse",
+    "kennung": "wooga",
+    "anzahl": 5,
+    "de": 5,
+    "beispiele": [
+     "Game Artist - Monetization Focus (12-months contract) [Berlin]",
+     "Marketing Data Analyst (18-month contract) [Berlin]",
+     "Senior Data Engineer [Berlin]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Kolibri Games",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "lever",
+    "kennung": "kolibrigames",
+    "anzahl": 4,
+    "de": 4,
+    "beispiele": [
+     "(Sr.) Producer (f/m/d) - (18-Month Contract) [Berlin, Germany]",
+     "Game Data Analyst (f/m/d) [Berlin, Germany]",
+     "Game Economy Designer (f/m/d) [Berlin, Germany]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "InnoGames",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": [
+   {
+    "ok": false,
+    "system": "lever",
+    "kennung": "innogames",
+    "fehler": "Lever innogames: HTTP 404",
+    "erkannt": true
+   }
+  ]
+ },
+ {
+  "name": "Goodgame Studios",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Yager",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Travian Games",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "personio",
+    "kennung": "traviangames",
+    "anzahl": 2,
+    "de": 2,
+    "beispiele": [
+     "Game Project Team Lead (w/m/d) [München]",
+     "Senior Frontend Developer (w/m/d) [München]"
+    ],
+    "erkannt": true
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Bytro Labs",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "GameDuell",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "join",
+    "kennung": "gameduell",
+    "anzahl": 2,
+    "de": 2,
+    "beispiele": [
+     "Game UI Artist (Unity 2D) (f/m/d*) [Berlin]",
+     "IT Tooling & Process Associate / Atlassian Specialist (f/m/d) [Berlin]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Ubisoft Blue Byte",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "smartrecruiters",
+    "kennung": "ubisoft2",
+    "anzahl": 298,
+    "de": 1,
+    "beispiele": [
+     "Team Manager - Continuous Integration, Continuous Delivery and Developer Productivity [Montreal, QC, Canada]",
+     "CG Supervisor [Montreal, QC, Canada]",
+     "Superviseur·e CG  - Hybride VFX [Montreal, QC, Canada]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Klang Games",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Daedalic",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Fishlabs",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Crytek",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "lever",
+    "kennung": "crytek",
+    "anzahl": 7,
+    "de": 7,
+    "beispiele": [
+     "Creator Partnerships Manager [Frankfurt]",
+     "Development Director [Frankfurt]",
+     "Global Brand & Marketing Director [Frankfurt]"
+    ],
+    "erkannt": true
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Envision Entertainment",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Northbound Games",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "N26",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "greenhouse",
+    "kennung": "n26",
+    "anzahl": 36,
+    "de": 21,
+    "beispiele": [
+     "AFC Associate - SAR Delegate (Déclarant Tracfin) [Paris]",
+     "AFC Manager - SAR Delegate Lead | MLRO France [Paris]",
+     "AFC Operations Team Lead Italy [Madrid]"
+    ],
+    "erkannt": true
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "GetYourGuide",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "greenhouse",
+    "kennung": "getyourguide",
+    "anzahl": 69,
+    "de": 55,
+    "beispiele": [
+     "Account Executive Greece (Greek Speaking) [Berlin]",
+     "Account Executive - South America [Sao Paulo]",
+     "Account Manager, San Francisco [San Francisco ]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "SoundCloud",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "greenhouse",
+    "kennung": "soundcloud71",
+    "anzahl": 17,
+    "de": 5,
+    "beispiele": [
+     "Backend Engineer - Media Streaming [Berlin]",
+     "Director - Internal Communications [New York]",
+     "Director - Technical Accounting [Berlin]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Ableton",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Native Instruments",
+  "treffer": [],
+  "andere_systeme": [
+   "pinpoint"
+  ],
+  "fehler": []
+ },
+ {
+  "name": "Trade Republic",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "greenhouse",
+    "kennung": "traderepublicbank",
+    "anzahl": 48,
+    "de": 10,
+    "beispiele": [
+     "Accounting Intern [Headquarter]",
+     "Analytics Engineering (London) [London]",
+     "Analytics Engineering (Paris) [Paris]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Taxfix",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Scalable Capital",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "HelloFresh",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "greenhouse",
+    "kennung": "hellofresh",
+    "anzahl": 388,
+    "de": 83,
+    "beispiele": [
+     "Allround Onderhoudsmonteur (v/m/x) [Bleiswijk, South Holland, Netherlands]",
+     "Area Manager [Phoenix, AZ, United States]",
+     "Area Manager [Newark, NJ, United States]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Delivery Hero",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "smartrecruiters",
+    "kennung": "DeliveryHero",
+    "anzahl": 906,
+    "de": 38,
+    "beispiele": [
+     "Talent Acquisiton Analyst [Miraflores, , Peru]",
+     "Business Analyst - Romania [Bucharest, Bucharest, Romania]",
+     "Growth Analyst - Romania [Bucharest, Bucharest, Romania]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Ecosia",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Jodel",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "personio",
+    "kennung": "jodel",
+    "anzahl": 1,
+    "de": 1,
+    "beispiele": [
+     "Open Application [Germany Berlin]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Miro",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "greenhouse",
+    "kennung": "realtimeboardglobal",
+    "anzahl": 22,
+    "de": 2,
+    "beispiele": [
+     "Commercial Account Executive [Austin, US]",
+     "Commercial Account Executive (CEE) [Amsterdam, NL]",
+     "Country Manager, Japan [Tokyo, JP]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Figma",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "greenhouse",
+    "kennung": "figma",
+    "anzahl": 145,
+    "de": 8,
+    "beispiele": [
+     "Account Executive, Enterprise [San Francisco, CA • New York, NY • United States]",
+     "Account Executive, Enterprise (Bengaluru, India) [Bengaluru, India]",
+     "Account Executive, Enterprise (Berlin, Germany) [Berlin, Germany]"
+    ],
+    "erkannt": true
+   }
+  ],
+  "andere_systeme": [
+   "greenhouse-like(generic)"
+  ],
+  "fehler": []
+ },
+ {
+  "name": "Raisin",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "greenhouse",
+    "kennung": "raisin",
+    "anzahl": 31,
+    "de": 22,
+    "beispiele": [
+     "B2B Partner Operations Manager (m/f/d) [Berlin, Berlin, Germany]",
+     "Chief of Staff, Strategic Growth & Partnerships (UK) [London, England, United Kingdom]",
+     "Corporate Communications Manager (m/f/d) [Berlin, Berlin, Germany]"
+    ],
+    "erkannt": true
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Vivid Money",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "personio",
+    "kennung": "vivid",
+    "anzahl": 18,
+    "de": 5,
+    "beispiele": [
+     "Branch Manager – Austria (m/f/d) [Austria]",
+     "Branch Manager – Belgium (m/f/d) [Belgium]",
+     "Branch Manager – Greece (m/f/d) [Greece]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Grover",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "greenhouse",
+    "kennung": "grover",
+    "anzahl": 10,
+    "de": 10,
+    "beispiele": [
+     "Account Executive (B2B) (m/w/x) [Berlin HQ]",
+     "Account Executive DACH (C1+ German) (m/w/x) [Berlin HQ]",
+     "B2B Key Account Manager (C1+ Deutsch) (m/w/d) [Berlin HQ]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Personio",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "recruitee",
+    "kennung": "personio",
+    "anzahl": 1,
+    "de": 1,
+    "beispiele": [
+     "API Job - Berlin - Musterstr 1, 10111 [Berlin, Berlin, Deutschland]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "tado",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "personio",
+    "kennung": "tado",
+    "anzahl": 2,
+    "de": 2,
+    "beispiele": [
+     "Team Lead Accounting (m/f/d) [Germany - Munich]",
+     "Werkstudent:in Accounting (m/w/d) [Germany - Munich]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Enpal",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "ashby",
+    "kennung": "enpal",
+    "anzahl": 169,
+    "de": 126,
+    "beispiele": [
+     "Sales Account Manager – Commercial & Industrial | Settore Fotovoltaico [Tunis]",
+     "Mobiler Ausbilder für Wärmepumpen (w/m/d) [Berlin]",
+     "Sales Manager (w/m/d) [München]"
+    ],
+    "erkannt": false
+   },
+   {
+    "ok": true,
+    "system": "join",
+    "kennung": "enpal",
+    "anzahl": 1,
+    "de": 0,
+    "beispiele": [
+     "Intern (w/m/d) Learning & Development DaF [Blankenfelde-Mahlow]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Mister Spex",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "join",
+    "kennung": "misterspex",
+    "anzahl": 2,
+    "de": 0,
+    "beispiele": [
+     "Augenoptiker in Vollzeit oder Teilzeit (m/w/d) im Großraum Frankfurt [Sulzbach (Taunus)]",
+     "Verkäufer (m/w/d) im Main-Taunus-Zentrum in Voll- und Teilzeit [Sulzbach (Taunus)]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Zattoo",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "greenhouse",
+    "kennung": "zattoo",
+    "anzahl": 8,
+    "de": 8,
+    "beispiele": [
+     "Engineering Manager Ads Backend [Berlin, Berlin, Germany]",
+     "Join our Talent Community [Berlin, Berlin, Germany]",
+     "Principal Engineer - Quality Assurance [Berlin, Berlin, Germany]"
+    ],
+    "erkannt": false
+   },
+   {
+    "ok": true,
+    "system": "join",
+    "kennung": "zattoo",
+    "anzahl": 5,
+    "de": 5,
+    "beispiele": [
+     "Engineering Manager Ads Backend [Berlin]",
+     "Join our Talent Community [Berlin]",
+     "Principal Engineer - Quality Assurance [Berlin]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [],
+  "fehler": []
+ },
+ {
+  "name": "Rive",
+  "treffer": [],
+  "andere_systeme": [],
+  "fehler": [
+   {
+    "ok": false,
+    "system": "workable",
+    "kennung": "rivecareers",
+    "fehler": "Workable rivecareers: HTTP 429 (zu viele Anfragen / blockiert)",
+    "erkannt": true
+   }
+  ]
+ },
+ {
+  "name": "LottieFiles",
+  "treffer": [
+   {
+    "ok": true,
+    "system": "smartrecruiters",
+    "kennung": "lottiefiles",
+    "anzahl": 1,
+    "de": 0,
+    "beispiele": [
+     "Senior Platform Engineer [Palo Alto, CA, United States]"
+    ],
+    "erkannt": false
+   }
+  ],
+  "andere_systeme": [
+   "bamboohr"
+  ],
+  "fehler": []
+ }
+]
