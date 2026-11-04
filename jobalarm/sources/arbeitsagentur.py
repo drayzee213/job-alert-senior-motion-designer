@@ -63,7 +63,7 @@ def parse_item(item: dict[str, Any], homeoffice: bool = False) -> Job | None:
 
 
 def _items(data: dict[str, Any]) -> list[dict[str, Any]]:
-    for key in ("stellenangebote", "ergebnisse", "jobs", "stellen"):
+    for key in ("ergebnisliste", "stellenangebote", "ergebnisse", "jobs", "stellen"):
         val = data.get(key)
         if isinstance(val, list):
             return val
