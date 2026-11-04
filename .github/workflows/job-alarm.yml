@@ -1,9 +1,11 @@
 name: Job-Alarm
 
 on:
-  # Zeitplan wird nach dem Testlauf eingeschaltet
-  # schedule:
-  #   - cron: "17,47 5-21 * * *"
+  schedule:
+    # Zeiten in UTC. 5–21 Uhr UTC deckt 7–22 Uhr Berlin im Sommer und Winter ab;
+    # das genaue Zeitfenster prüft der Bot selbst (config.yaml -> benachrichtigung).
+    # Krumme Minuten (:17 und :47), weil zur vollen Stunde viele Läufe warten.
+    - cron: "17,47 5-21 * * *"
   workflow_dispatch:
     inputs:
       aktuelle_senden:
