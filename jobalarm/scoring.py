@@ -6,7 +6,7 @@ import re
 from functools import lru_cache
 from typing import Any
 
-from .location import classify_location
+from .location import HYBRID_RE, classify_location
 from .models import Job
 
 TAG_RE = re.compile(r"<[^>]+>")
@@ -95,7 +95,8 @@ def score_job(job: Job, cfg: dict[str, Any]) -> Job:
     elif kind == "remote_de":
         reasons.append("Remote")
     elif kind == "remote_unklar":
-        reasons.append("Remote möglich (Region prüfen)")
+        reasons.append("Homeoffice teilweise möglich" if HYBRID_RE.search(label)
+                       else "Remote möglich (Region prüfen)")
     elif kind == "anderer_ort_de":
         reasons.append(f"Achtung: vor Ort in {job.location}")
     elif kind == "ausland":

@@ -14,8 +14,6 @@ on:
         description: "Kandidaten-Firmen (tools/firmen_kandidaten.yaml) automatisch prüfen"
         type: boolean
         default: false
-  push:
-    paths: ["tools/pruefauftrag.txt"]
 
 permissions:
   contents: write
@@ -37,8 +35,8 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Prüfen
         env:
-          JOBSPY: ${{ github.event_name == 'push' || inputs.jobspy }}
-          KANDIDATEN: ${{ github.event_name == 'push' || inputs.kandidaten }}
+          JOBSPY: ${{ inputs.jobspy }}
+          KANDIDATEN: ${{ inputs.kandidaten }}
         run: |
           ARGS=""
           if [ "$JOBSPY" = "true" ]; then ARGS="$ARGS --jobspy"; fi

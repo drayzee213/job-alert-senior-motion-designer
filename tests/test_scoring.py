@@ -93,6 +93,8 @@ def test_rive_nicht_in_anderen_woertern():
     ("Remote", True, "remote_unklar"),
     ("Remote - Germany", None, "remote_de"),
     ("Hamburg (Homeoffice möglich)", True, "remote_de"),
+    ("Hamburg (Homeoffice möglich)", None, "remote_unklar"),
+    ("Berlin (Homeoffice möglich)", None, "berlin"),
     ("Deutschland", True, "remote_de"),
     ("Remote, EMEA", None, "remote_de"),
     ("München", None, "anderer_ort_de"),

@@ -41,6 +41,8 @@ FOREIGN_RE = re.compile(
     r"montreal|latam|apac|americas|north america)\b",
     re.I,
 )
+# Homeoffice nur teilweise / nach Vereinbarung
+HYBRID_RE = re.compile(r"homeoffice möglich|homeoffice nach vereinbarung|teilweise homeoffice|\bhybrid\b", re.I)
 # "Remote" mit klarer Einschränkung auf eine andere Region
 FOREIGN_REMOTE_RE = re.compile(
     r"remote\s*[-–(,:]?\s*(us|usa|u\.s\.|united states|canada|uk|united kingdom|india|latam|"
@@ -70,7 +72,11 @@ def classify_location(location: str, remote_flag: bool | None = None, title: str
     foreign_remote = bool(FOREIGN_REMOTE_RE.search(text))
 
     if berlin:
+        if HYBRID_RE.search(loc):
+            return "berlin", loc
         return "berlin", ("Berlin (auch Remote)" if remote else "Berlin") if loc else "Berlin"
+    if remote and german and HYBRID_RE.search(loc) and not remote_flag:
+        return "remote_unklar", loc
     if remote and not foreign_remote and (german or not foreign):
         if german:
             return "remote_de", _remote_label(loc)

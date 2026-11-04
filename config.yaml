@@ -6,7 +6,8 @@
 # =====================================================================
 
 # ---------------------------------------------------------------------
-# Suchbegriffe für die Jobbörse der Arbeitsagentur (eine Abfrage pro Begriff)
+# Suchbegriffe für die Jobbörse der Arbeitsagentur (eine bundesweite Abfrage
+# pro Begriff; ob Ort/Remote passen, entscheidet die Bewertung weiter unten)
 # ---------------------------------------------------------------------
 suche:
   begriffe:
@@ -18,8 +19,6 @@ suche:
     - 2D Animator
     - UI Animation
     - Motion Graphics
-  ort: Berlin
-  umkreis_km: 40
 
 # ---------------------------------------------------------------------
 # Quellen ein-/ausschalten
@@ -28,7 +27,6 @@ quellen:
   arbeitsagentur:
     aktiv: true
     tage_zurueck: 7          # nur Anzeigen der letzten X Tage abfragen
-    homeoffice_bundesweit: true  # zusätzlich: Homeoffice-Stellen in ganz Deutschland
     details_laden: true      # Beschreibung für interessante Treffer nachladen
 
   # Indeed und LinkedIn über python-jobspy.

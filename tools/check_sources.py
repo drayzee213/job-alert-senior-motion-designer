@@ -30,7 +30,10 @@ FINGERPRINTS = [
     ("greenhouse", r"(?:boards|job-boards)(?:\.eu)?\.greenhouse\.io/(?:embed/job_board\?for=)?([A-Za-z0-9_-]+)"),
     ("greenhouse", r"boards-api\.greenhouse\.io/v1/boards/([A-Za-z0-9_-]+)"),
     ("greenhouse", r"greenhouse\.io/embed/job_board(?:/js)?\?for=([A-Za-z0-9_-]+)"),
-    ("lever", r"jobs\.(?:eu\.)?lever\.co/([A-Za-z0-9_.-]+)"),
+    ("lever-eu", r"jobs\.eu\.lever\.co/([A-Za-z0-9_.-]+)"),
+    ("lever", r"jobs\.lever\.co/([A-Za-z0-9_.-]+)"),
+    ("teamtailor", r"([A-Za-z0-9-]+)\.teamtailor\.com"),
+    ("bamboohr", r"([A-Za-z0-9-]+)\.bamboohr\.com"),
     ("ashby", r"jobs\.ashbyhq\.com/([A-Za-z0-9_.%-]+)"),
     ("personio", r"([A-Za-z0-9-]+)\.jobs\.personio\.(?:de|com)"),
     ("recruitee", r"([A-Za-z0-9-]+)\.recruitee\.com"),
@@ -40,9 +43,9 @@ FINGERPRINTS = [
     ("workday", r"([A-Za-z0-9-]+)\.(wd\d+)\.myworkdayjobs\.com/(?:[a-z]{2}-[A-Z]{2}/)?([A-Za-z0-9_-]+)"),
 ]
 OTHER_ATS = {
-    "softgarden": r"softgarden\.(?:io|de)", "teamtailor": r"teamtailor\.com", "onlyfy/prescreen":
+    "softgarden": r"softgarden\.(?:io|de)", "onlyfy/prescreen":
     r"onlyfy\.jobs|prescreen\.io", "d.vinci": r"dvinci|d-vinci", "rexx": r"rexx-systems|rexx-recruitment",
-    "workwise": r"workwise\.io", "hrworks": r"hrworks", "bamboohr": r"bamboohr\.com",
+    "workwise": r"workwise\.io", "hrworks": r"hrworks",
     "jobvite": r"jobvite\.com", "icims": r"icims\.com", "successfactors": r"successfactors|sapsf",
     "breezy": r"breezy\.hr", "pinpoint": r"pinpointhq\.com", "comeet": r"comeet\.(?:co|com)",
     "gem": r"jobs\.gem\.com", "rippling": r"ats\.rippling\.com", "factorial": r"factorialhr",
@@ -51,7 +54,7 @@ OTHER_ATS = {
 SKIP_SLUGS = {"embed", "js", "api", "v1", "jobs", "job_board", "www", "de", "en", "careers", "cdn",
               "static", "assets", "app", "boards"}
 GUESS_SYSTEMS = ["greenhouse", "lever", "ashby", "personio", "recruitee", "workable", "join",
-                 "smartrecruiters"]
+                 "smartrecruiters", "teamtailor"]
 
 REPORT: list[str] = []
 
@@ -73,6 +76,12 @@ def detect(html: str) -> tuple[list[tuple[str, str, dict]], list[str]]:
     found: list[tuple[str, str, dict]] = []
     for system, pattern in FINGERPRINTS:
         for m in re.finditer(pattern, html):
+            if system == "lever-eu":
+                system, slug, extra = "lever", m.group(1), {"region": "eu"}
+                if slug.lower() in SKIP_SLUGS or (system, slug, extra) in found:
+                    continue
+                found.append((system, slug, extra))
+                continue
             if system == "workday":
                 extra = {"host": f"{m.group(1)}.{m.group(2)}.myworkdayjobs.com", "seite": m.group(3)}
                 slug = m.group(1)

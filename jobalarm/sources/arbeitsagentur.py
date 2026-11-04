@@ -28,35 +28,46 @@ def _first(d: dict[str, Any], *keys: str) -> Any:
 
 
 def parse_item(item: dict[str, Any], homeoffice: bool = False) -> Job | None:
-    refnr = _first(item, "refnr", "referenznummer")
+    """Liest einen Eintrag der Suche. v6 (Stand 11/2026) nutzt u. a. referenznummer,
+    stellenangebotsTitel, firma, stellenlokationen, homeofficemoeglich,
+    datumErsteVeroeffentlichung, externeURL. Ältere Feldnamen (v4) gehen auch."""
+    refnr = _first(item, "referenznummer", "refnr")
     if not refnr:
         return None
-    title = _first(item, "titel", "stellenangebotsTitel", "stellentitel", "beruf") or ""
-    company = _first(item, "arbeitgeber", "arbeitgeberName", "firma") or ""
+    title = _first(item, "stellenangebotsTitel", "titel", "stellentitel", "beruf", "hauptberuf") or ""
+    company = _first(item, "firma", "arbeitgeber", "arbeitgeberName") or ""
     if isinstance(company, dict):
         company = company.get("name") or ""
-    place = _first(item, "arbeitsort", "stellenlokation")
-    if not place and isinstance(item.get("arbeitsorte"), list) and item["arbeitsorte"]:
-        place = item["arbeitsorte"][0]
-    location = ""
-    if isinstance(place, dict):
-        location = place.get("ort") or place.get("region") or ""
-        adr = place.get("adresse")
-        if not location and isinstance(adr, dict):
-            location = adr.get("ort") or ""
-    elif isinstance(place, str):
-        location = place
-    posted = _first(item, "aktuelleVeroeffentlichungsdatum", "veroeffentlichungsdatum",
-                    "ersteVeroeffentlichungsdatum", "modifikationsTimestamp")
-    url = _first(item, "externeUrl") or f"https://www.arbeitsagentur.de/jobsuche/jobdetail/{refnr}"
+    places = []
+    for loc in item.get("stellenlokationen") or item.get("arbeitsorte") or []:
+        if isinstance(loc, dict):
+            adr = loc.get("adresse") if isinstance(loc.get("adresse"), dict) else loc
+            ort = adr.get("ort") or adr.get("region") or ""
+            if ort and ort not in places:
+                places.append(str(ort))
+    place = item.get("arbeitsort")
+    if not places and isinstance(place, dict) and place.get("ort"):
+        places.append(str(place["ort"]))
+    location = ", ".join(places[:3]) + (" u. a." if len(places) > 3 else "")
+    if not location:
+        location = "Deutschland"
+    ho = homeoffice or bool(item.get("homeofficemoeglich"))
+    if ho:
+        location += " (Homeoffice möglich)"
+    zeitraum = item.get("veroeffentlichungszeitraum") or {}
+    posted = _first(item, "datumErsteVeroeffentlichung", "aktuelleVeroeffentlichungsdatum",
+                    "veroeffentlichungsdatum") or (zeitraum.get("von") if isinstance(zeitraum, dict) else None)
+    url = _first(item, "externeURL", "externeUrl") or f"https://www.arbeitsagentur.de/jobsuche/jobdetail/{refnr}"
+    title = str(title)
+    if item.get("vertragsdauer") == "BEFRISTET" and "befrist" not in title.lower():
+        title += " [befristet]"
     return Job(
         source="arbeitsagentur",
         source_id=str(refnr),
-        title=str(title),
+        title=title,
         company=str(company),
-        location=str(location) + (" (Homeoffice möglich)" if homeoffice else ""),
+        location=location,
         url=str(url),
-        remote=True if homeoffice else None,
         posted=str(posted)[:10] if posted else None,
         source_label=LABEL,
     )
@@ -71,34 +82,30 @@ def _items(data: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def fetch(cfg: dict[str, Any]) -> list[Job]:
+    """Eine bundesweite Abfrage pro Suchbegriff (Berlin ist darin enthalten; ob der Ort
+    passt, entscheidet die Bewertung)."""
     src = cfg["quellen"]["arbeitsagentur"]
-    search = cfg["suche"]
     days = int(src.get("tage_zurueck", 7))
     jobs: dict[str, Job] = {}
     errors = []
     calls = 0
-    variants = [{"wo": search.get("ort", "Berlin"), "umkreis": search.get("umkreis_km", 40)}]
-    if src.get("homeoffice_bundesweit", True):
-        variants.append({"arbeitszeit": "ho"})
-    for term in search.get("begriffe", []):
-        for variant in variants:
-            params = {"was": term, "angebotsart": 1, "veroeffentlichtseit": days,
-                      "size": 50, "page": 1, "pav": "false", **variant}
-            try:
-                resp = http.get(SEARCH_URL, params=params, headers=HEADERS, what="Arbeitsagentur")
-                data = resp.json()
-            except (SourceError, ValueError) as exc:
-                errors.append(str(exc))
-                calls += 1
-                if calls >= 2 and len(errors) == calls:
-                    raise SourceError(errors[0])  # Schnittstelle offenbar gestört -> abbrechen
-                continue
+    for term in cfg["suche"].get("begriffe", []):
+        params = {"was": term, "angebotsart": 1, "veroeffentlichtseit": days,
+                  "size": 100, "page": 1, "pav": "false"}
+        try:
+            data = http.get(SEARCH_URL, params=params, headers=HEADERS, what="Arbeitsagentur").json()
+        except (SourceError, ValueError) as exc:
+            errors.append(str(exc))
             calls += 1
-            time.sleep(0.5)
-            for item in _items(data):
-                job = parse_item(item, homeoffice=variant.get("arbeitszeit") == "ho")
-                if job and job.uid not in jobs:
-                    jobs[job.uid] = job
+            if calls >= 2 and len(errors) == calls:
+                raise SourceError(errors[0])  # Schnittstelle offenbar gestört -> abbrechen
+            continue
+        calls += 1
+        time.sleep(0.5)
+        for item in _items(data):
+            job = parse_item(item)
+            if job and job.uid not in jobs:
+                jobs[job.uid] = job
     if errors and len(errors) == calls:
         raise SourceError(errors[0])
     return list(jobs.values())

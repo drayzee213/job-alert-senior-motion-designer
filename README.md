@@ -9,7 +9,7 @@ neu online ist. Er läuft kostenlos bei GitHub („GitHub Actions“) – dein P
 | Quelle | Wie | Wie oft |
 |---|---|---|
 | Jobbörse der Arbeitsagentur | offene Schnittstelle, kein Konto nötig | jeder Lauf |
-| Firmen-Karriereseiten (`firmen.yaml`) | öffentliche Schnittstellen der Bewerbungssysteme (Greenhouse, Lever, Ashby, Personio, Recruitee, SmartRecruiters, Workable, JOIN, Workday) | jeder Lauf |
+| Firmen-Karriereseiten (`firmen.yaml`, 25 Firmen) | öffentliche Schnittstellen der Bewerbungssysteme (Greenhouse, Lever, Ashby, Personio, Recruitee, SmartRecruiters, Workable, JOIN, Teamtailor, BambooHR, Workday) | jeder Lauf |
 | Arbeitnow | kostenlose Jobbörse mit offener Schnittstelle, viele deutsche Tech-Firmen | jeder Lauf |
 | Indeed und LinkedIn | über die Bibliothek *python-jobspy* | nur alle 2 Stunden (zurückhaltend) |
 
@@ -197,6 +197,16 @@ Stelle. Schau dir den Link in der Adresszeile an:
 | `jobs.smartrecruiters.com/Firma/...` | `smartrecruiters` | `Firma` |
 | `apply.workable.com/firma/...` | `workable` | `firma` |
 | `join.com/companies/firma/...` | `join` | `firma` |
+| `firma.teamtailor.com/...` | `teamtailor` | `firma` |
+| `firma.bamboohr.com/...` | `bamboohr` | `firma` |
+| `jobs.eu.lever.co/firma/...` | `lever` + Zeile `region: eu` | `firma` |
+
+Am Ende der Datei stehen einige geprüfte Reserve-Firmen mit `aktiv: false`. Zum
+Einschalten einfach `, aktiv: false` löschen.
+
+Nicht jede Firma hat eine abrufbare Stellen-Schnittstelle. Bei Applimeda zum Beispiel
+gibt es keine verlinkte Stellenseite. Deren Anzeigen findet der Bot trotzdem, sobald sie
+bei der Arbeitsagentur, LinkedIn oder Indeed erscheinen.
 
 Danach unter **Actions → Quellen prüfen → Run workflow** testen. In der Zusammenfassung des
 Laufs steht für jede Firma ✅ oder ❌.

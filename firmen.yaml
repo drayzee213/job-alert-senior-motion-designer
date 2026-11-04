@@ -4,7 +4,8 @@
 #
 #  Eine Firma hinzufügen – einfach einen Block kopieren und anpassen:
 #    - name: Firmenname (so steht er in der Nachricht)
-#      system: greenhouse | lever | ashby | personio | recruitee | smartrecruiters | workable | join | workday
+#      system: greenhouse | lever | ashby | personio | recruitee | smartrecruiters | workable | join |
+#              teamtailor | bamboohr | workday
 #      kennung: der Firmen-Name im Link des Bewerbungssystems, z. B.
 #          boards.greenhouse.io/DUOLINGO        -> system: greenhouse, kennung: duolingo
 #          jobs.lever.co/FIRMA                  -> system: lever
@@ -14,12 +15,50 @@
 #          jobs.smartrecruiters.com/FIRMA       -> system: smartrecruiters
 #          apply.workable.com/FIRMA             -> system: workable
 #          join.com/companies/FIRMA             -> system: join
+#          FIRMA.teamtailor.com                 -> system: teamtailor
+#          FIRMA.bamboohr.com                   -> system: bamboohr
+#          jobs.eu.lever.co/FIRMA               -> system: lever, dazu Zeile  region: eu
 #      notiz: frei, wird nicht ausgewertet
 #  Vorübergehend abschalten: Zeile "aktiv: false" ergänzen.
 #  Tipp: Workflow "Quellen prüfen" starten – dann siehst du, ob deine Firma funktioniert.
 # =====================================================================
 firmen:
-  - name: Duolingo
-    system: greenhouse
-    kennung: duolingo
-    notiz: Berlin-Office; Characters, Rive-Animationen
+  # ----- Lern-Apps (Characters, Gamification)
+  - {name: Duolingo, system: greenhouse, kennung: duolingo, notiz: "Berlin-Office; Characters mit Rive"}
+  - {name: Babbel, system: ashby, kennung: babbel, notiz: "Sprach-App, Berlin"}
+  - {name: simpleclub, system: join, kennung: simpleclub, notiz: "Lern-App, Berlin, Erklärvideos/Characters"}
+  - {name: ANTON, system: personio, kennung: anton, notiz: "Lern-App für Kinder, Berlin"}
+  - {name: sofatutor, system: recruitee, kennung: sofatutor, notiz: "Lernplattform, animierte Lernvideos, Berlin"}
+  - {name: Knowunity, system: ashby, kennung: knowunity, notiz: "Lern-App, Berlin"}
+  - {name: StudySmarter, system: personio, kennung: studysmarter, notiz: "Lern-App, remote DE"}
+  # ----- Gesundheit
+  - {name: Oviva, system: ashby, kennung: oviva, notiz: "Gesundheits-App, Berlin/Potsdam"}
+  - {name: YAZIO, system: ashby, kennung: yazio, notiz: "Ernährungs-App"}
+  - {name: HelloBetter, system: personio, kennung: geton, notiz: "Psychologische Online-Kurse (GET.ON Institut)"}
+  - {name: Clue, system: bamboohr, kennung: helloclue, notiz: "Zyklus-App, Berlin"}
+  # ----- Games
+  - {name: Wooga, system: greenhouse, kennung: wooga, notiz: "Mobile Games, Berlin"}
+  - {name: Kolibri Games, system: lever, kennung: kolibrigames, notiz: "Mobile Games, Berlin"}
+  - {name: InnoGames, system: lever, kennung: innogames, region: eu, notiz: "Games, Hamburg"}
+  - {name: Goodgame Studios, system: teamtailor, kennung: goodgamestudios, notiz: "Games, Hamburg"}
+  - {name: GameDuell, system: join, kennung: gameduell, notiz: "Games, Berlin"}
+  - {name: Travian Games, system: personio, kennung: traviangames, notiz: "Games, München"}
+  - {name: Yager, system: personio, kennung: yager, notiz: "Games, Berlin"}
+  - {name: Ubisoft, system: smartrecruiters, kennung: Ubisoft2, notiz: "u. a. Blue Byte Berlin/Düsseldorf/Mainz"}
+  # ----- Tech/Design mit Motion-Bezug
+  - {name: Rive, system: workable, kennung: rivecareers, notiz: "das Rive-Tool selbst, remote"}
+  - {name: Trade Republic, system: greenhouse, kennung: traderepublicbank, notiz: "Berlin, starkes Motion-Design"}
+  - {name: N26, system: greenhouse, kennung: n26, notiz: "Berlin"}
+  - {name: GetYourGuide, system: greenhouse, kennung: getyourguide, notiz: "Berlin"}
+  - {name: Delivery Hero, system: smartrecruiters, kennung: DeliveryHero, notiz: "Berlin, großes Design-Team"}
+  - {name: Figma, system: greenhouse, kennung: figma, notiz: "Berlin-Office"}
+
+  # ----- Reserve: geprüft, aber standardmäßig aus (aktiv: false löschen zum Einschalten)
+  - {name: HelloFresh, system: greenhouse, kennung: hellofresh, aktiv: false}
+  - {name: SoundCloud, system: greenhouse, kennung: soundcloud71, aktiv: false}
+  - {name: Miro, system: greenhouse, kennung: realtimeboardglobal, aktiv: false}
+  - {name: Doctolib, system: ashby, kennung: doctolib, aktiv: false}
+  - {name: Crytek, system: lever, kennung: crytek, aktiv: false}
+  - {name: Kaia Health, system: smartrecruiters, kennung: kaiahealth, aktiv: false}
+  - {name: Scalable Capital, system: smartrecruiters, kennung: ScalableGmbH, aktiv: false}
+  - {name: Zattoo, system: greenhouse, kennung: zattoo, aktiv: false}

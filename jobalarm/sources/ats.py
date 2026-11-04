@@ -1,7 +1,7 @@
 """Öffentliche Stellen-Schnittstellen der Bewerbungssysteme (ATS) einzelner Firmen.
 
 Unterstützt: greenhouse, lever, ashby, personio, recruitee, smartrecruiters, workable,
-join, workday. Eintrag in firmen.yaml z.B.:
+join, workday, teamtailor, bamboohr. Eintrag in firmen.yaml z.B.:
     - name: Duolingo
       system: greenhouse
       kennung: duolingo
@@ -12,6 +12,7 @@ import json
 import re
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from typing import Any, Callable
 
 from .. import http
@@ -258,6 +259,68 @@ def workday(c: dict[str, Any]) -> list[Job]:
     return list(out.values())
 
 
+# ---------------------------------------------------------------- Teamtailor
+def teamtailor(c: dict[str, Any]) -> list[Job]:
+    """Öffentlicher RSS-Feed https://<kennung>.teamtailor.com/jobs.rss"""
+    resp = http.get(f"https://{c['kennung']}.teamtailor.com/jobs.rss", what=f"Teamtailor {c['kennung']}")
+    try:
+        return parse_teamtailor(resp.content, c)
+    except ET.ParseError as exc:
+        raise SourceError(f"Teamtailor {c['kennung']}: kein gültiger Feed ({exc})") from exc
+
+
+def _local(tag: str) -> str:
+    return tag.rsplit("}", 1)[-1].lower()
+
+
+def parse_teamtailor(content: bytes, c: dict[str, Any]) -> list[Job]:
+    root = ET.fromstring(content)
+    out = []
+    for item in root.iter("item"):
+        fields: dict[str, str] = {}
+        cities: list[str] = []
+        for child in item:
+            name = _local(child.tag)
+            if name in ("locations", "location"):
+                for el in child.iter():
+                    if _local(el.tag) == "city" and (el.text or "").strip():
+                        city = el.text.strip()
+                        if city not in cities:
+                            cities.append(city)
+            elif (child.text or "").strip():
+                fields.setdefault(name, child.text.strip())
+        posted = None
+        if fields.get("pubdate"):
+            try:
+                posted = parsedate_to_datetime(fields["pubdate"]).date().isoformat()
+            except (TypeError, ValueError):
+                posted = None
+        remote_status = fields.get("remotestatus", "").lower()
+        link = fields.get("link", "")
+        out.append(_job(c, "teamtailor", fields.get("guid") or link, fields.get("title", ""),
+                        location=", ".join(cities) or ("Remote" if remote_status == "fully" else ""),
+                        url=link, description=plain_text(fields.get("description", "")),
+                        remote=True if remote_status in ("fully", "remote") else None,
+                        posted=posted))
+    return out
+
+
+# ---------------------------------------------------------------- BambooHR
+def bamboohr(c: dict[str, Any]) -> list[Job]:
+    data = http.get(f"https://{c['kennung']}.bamboohr.com/careers/list",
+                    headers={"Accept": "application/json"}, what=f"BambooHR {c['kennung']}").json()
+    out = []
+    for j in data.get("result", []):
+        loc = j.get("atsLocation") or j.get("location") or {}
+        parts = [loc.get("city"), loc.get("state") or loc.get("province"), loc.get("country")]
+        remote = j.get("isRemote") or str(j.get("locationType", "")) == "1"
+        out.append(_job(c, "bamboohr", j.get("id"), j.get("jobOpeningName", ""),
+                        location=", ".join(str(p) for p in parts if p),
+                        url=f"https://{c['kennung']}.bamboohr.com/careers/{j.get('id')}",
+                        remote=True if remote else None))
+    return out
+
+
 PROVIDERS: dict[str, Callable[[dict[str, Any]], list[Job]]] = {
     "greenhouse": greenhouse,
     "lever": lever,
@@ -268,6 +331,8 @@ PROVIDERS: dict[str, Callable[[dict[str, Any]], list[Job]]] = {
     "workable": workable,
     "join": join,
     "workday": workday,
+    "teamtailor": teamtailor,
+    "bamboohr": bamboohr,
 }
 
 
