@@ -1,0 +1,74 @@
+# Kandidaten für die Firmen-Watchlist. tools/check_sources.py prüft, welches
+# Bewerbungssystem jede Firma wirklich nutzt (Karriereseite + bekannte Schnittstellen).
+kandidaten:
+  # --- Apps mit Characters/Maskottchen, Lernen, Gamification
+  - {name: Applimeda, seiten: ["https://www.applimeda.de/karriere", "https://applimeda.de/jobs", "https://www.applimeda.de"], kennungen: [applimeda, applimeda-gmbh]}
+  - {name: Duolingo, seiten: ["https://careers.duolingo.com"], kennungen: [duolingo]}
+  - {name: Babbel, seiten: ["https://jobs.babbel.com", "https://www.babbel.com/jobs"], kennungen: [babbel]}
+  - {name: simpleclub, seiten: ["https://simpleclub.com/jobs", "https://simpleclub.com/karriere"], kennungen: [simpleclub, simpleclub-gmbh]}
+  - {name: ANTON (solocode), seiten: ["https://anton.app/de/jobs", "https://anton.app/en/jobs"], kennungen: [solocode, anton, antonapp]}
+  - {name: sofatutor, seiten: ["https://www.sofatutor.com/jobs", "https://www.sofatutor.com/karriere"], kennungen: [sofatutor]}
+  - {name: Knowunity, seiten: ["https://knowunity.com/careers", "https://knowunity.de/jobs"], kennungen: [knowunity]}
+  - {name: StudySmarter, seiten: ["https://www.studysmarter.de/karriere/", "https://www.studysmarter.de/careers/"], kennungen: [studysmarter]}
+  - {name: Lingoda, seiten: ["https://www.lingoda.com/en/careers/"], kennungen: [lingoda]}
+  - {name: Tandem, seiten: ["https://tandem.net/jobs"], kennungen: [tandem, tandem-app]}
+  - {name: Blinkist, seiten: ["https://www.blinkist.com/en/careers"], kennungen: [blinkist]}
+  - {name: Sdui, seiten: ["https://sdui.de/karriere/", "https://sdui.de/jobs/"], kennungen: [sdui]}
+  - {name: Quizlet, seiten: ["https://quizlet.com/jobs"], kennungen: [quizlet]}
+  # --- Gesundheit / Wohlbefinden
+  - {name: Kaia Health, seiten: ["https://kaiahealth.com/careers/", "https://kaiahealth.de/karriere/"], kennungen: [kaiahealth, kaia-health, kaia]}
+  - {name: Clue, seiten: ["https://helloclue.com/careers"], kennungen: [clue, biowink, helloclue]}
+  - {name: Ada Health, seiten: ["https://about.ada.com/careers/"], kennungen: [adahealth, ada, ada-health]}
+  - {name: HelloBetter, seiten: ["https://hellobetter.de/karriere/", "https://hellobetter.de/jobs/"], kennungen: [hellobetter, geton, get-on]}
+  - {name: Selfapy, seiten: ["https://www.selfapy.com/karriere", "https://www.selfapy.com/jobs"], kennungen: [selfapy]}
+  - {name: Oviva, seiten: ["https://oviva.com/careers/"], kennungen: [oviva]}
+  - {name: 7Mind, seiten: ["https://www.7mind.de/karriere"], kennungen: [7mind, 7mindgmbh]}
+  - {name: Mimi Hearing, seiten: ["https://mimi.io/careers"], kennungen: [mimi, mimihearing]}
+  - {name: Fastic, seiten: ["https://fastic.com/careers/", "https://fastic.com/de/karriere/"], kennungen: [fastic]}
+  - {name: YAZIO, seiten: ["https://www.yazio.com/de/jobs", "https://www.yazio.com/en/jobs"], kennungen: [yazio]}
+  - {name: Freeletics, seiten: ["https://www.freeletics.com/en/corporate/jobs/"], kennungen: [freeletics]}
+  - {name: komoot, seiten: ["https://www.komoot.com/jobs"], kennungen: [komoot]}
+  - {name: Doctolib, seiten: ["https://careers.doctolib.com"], kennungen: [doctolib]}
+  - {name: Avi Medical, seiten: ["https://avimedical.com/karriere"], kennungen: [avimedical, avi-medical]}
+  - {name: Mindable Health, seiten: ["https://www.mindablehealth.de/karriere"], kennungen: [mindable, mindablehealth]}
+  # --- Games
+  - {name: Wooga, seiten: ["https://www.wooga.com/jobs/"], kennungen: [wooga]}
+  - {name: Kolibri Games, seiten: ["https://www.kolibrigames.com/careers"], kennungen: [kolibrigames, kolibri-games, kolibri]}
+  - {name: InnoGames, seiten: ["https://www.innogames.com/career/"], kennungen: [innogames, innogames1]}
+  - {name: Goodgame Studios, seiten: ["https://www.goodgamestudios.com/career/"], kennungen: [goodgamestudios, goodgame-studios, altigi]}
+  - {name: Yager, seiten: ["https://www.yager.de/jobs/", "https://yager.de/careers"], kennungen: [yager, yagerdevelopment]}
+  - {name: Travian Games, seiten: ["https://www.traviangames.com/en/career/"], kennungen: [traviangames, travian]}
+  - {name: Bytro Labs, seiten: ["https://www.bytro.com/jobs"], kennungen: [bytro, bytrolabs, bytro-labs]}
+  - {name: GameDuell, seiten: ["https://www.gameduell.com/jobs", "https://corporate.gameduell.com/jobs/"], kennungen: [gameduell]}
+  - {name: Ubisoft Blue Byte, seiten: ["https://www.ubisoft.com/de-de/company/careers/locations/germany"], kennungen: [ubisoft2, Ubisoft2, ubisoft]}
+  - {name: Klang Games, seiten: ["https://klang-games.com/jobs"], kennungen: [klanggames, klang-games, klang]}
+  - {name: Daedalic, seiten: ["https://www.daedalic.com/jobs"], kennungen: [daedalic, daedalicentertainment]}
+  - {name: Fishlabs, seiten: ["https://www.fishlabs.net/jobs/"], kennungen: [fishlabs, dsfishlabs]}
+  - {name: Crytek, seiten: ["https://www.crytek.com/career"], kennungen: [crytek]}
+  - {name: Envision Entertainment, seiten: ["https://envision-entertainment.de/jobs/"], kennungen: [envision, envisionentertainment]}
+  - {name: Northbound Games, seiten: ["https://www.northboundgames.com/jobs"], kennungen: [northboundgames]}
+  # --- Tech-Firmen mit Design-/Motion-Teams (Berlin/DE)
+  - {name: N26, seiten: ["https://n26.com/en/careers"], kennungen: [n26]}
+  - {name: GetYourGuide, seiten: ["https://careers.getyourguide.com"], kennungen: [getyourguide]}
+  - {name: SoundCloud, seiten: ["https://careers.soundcloud.com"], kennungen: [soundcloud71, soundcloud]}
+  - {name: Ableton, seiten: ["https://www.ableton.com/en/jobs/"], kennungen: [ableton]}
+  - {name: Native Instruments, seiten: ["https://www.native-instruments.com/en/careers/"], kennungen: [nativeinstruments, native-instruments]}
+  - {name: Trade Republic, seiten: ["https://traderepublic.com/careers"], kennungen: [traderepublic, traderepublicbank]}
+  - {name: Taxfix, seiten: ["https://taxfix.de/en/careers/"], kennungen: [taxfix]}
+  - {name: Scalable Capital, seiten: ["https://de.scalable.capital/karriere"], kennungen: [scalablecapital, scalable-capital, scalable]}
+  - {name: HelloFresh, seiten: ["https://careers.hellofresh.com"], kennungen: [hellofresh]}
+  - {name: Delivery Hero, seiten: ["https://careers.deliveryhero.com"], kennungen: [DeliveryHero, deliveryhero]}
+  - {name: Ecosia, seiten: ["https://jobs.ecosia.org"], kennungen: [ecosia]}
+  - {name: Jodel, seiten: ["https://jodel.com/jobs"], kennungen: [jodel, jodelventuresgmbh]}
+  - {name: Miro, seiten: ["https://miro.com/careers/"], kennungen: [realtimeboardglobal, miro]}
+  - {name: Figma, seiten: ["https://www.figma.com/careers/"], kennungen: [figma]}
+  - {name: Raisin, seiten: ["https://www.raisin.com/en/careers/"], kennungen: [raisin, raisingmbh]}
+  - {name: Vivid Money, seiten: ["https://vivid.money/en-eu/careers/"], kennungen: [vivid, vividmoney]}
+  - {name: Grover, seiten: ["https://www.grover.com/de-en/careers"], kennungen: [grover]}
+  - {name: Personio, seiten: ["https://www.personio.com/about-personio/careers/"], kennungen: [personio]}
+  - {name: tado, seiten: ["https://www.tado.com/de-de/karriere"], kennungen: [tado]}
+  - {name: Enpal, seiten: ["https://www.enpal.de/karriere"], kennungen: [enpal]}
+  - {name: Mister Spex, seiten: ["https://corporate.misterspex.com/de/karriere/"], kennungen: [misterspex]}
+  - {name: Zattoo, seiten: ["https://zattoo.com/company/de/jobs"], kennungen: [zattoo]}
+  - {name: Rive, seiten: ["https://rive.app/careers"], kennungen: [rive, rive-app]}
+  - {name: LottieFiles, seiten: ["https://lottiefiles.com/careers"], kennungen: [lottiefiles]}

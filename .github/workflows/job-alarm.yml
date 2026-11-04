@@ -1,0 +1,73 @@
+name: Job-Alarm
+
+on:
+  # Zeitplan wird nach dem Testlauf eingeschaltet
+  # schedule:
+  #   - cron: "17,47 5-21 * * *"
+  workflow_dispatch:
+    inputs:
+      aktuelle_senden:
+        description: "Passende Anzeigen der letzten 7 Tage einmal schicken"
+        type: boolean
+        default: false
+      trockenlauf:
+        description: "Trockenlauf (nichts senden, nichts speichern)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: job-alarm
+  cancel-in-progress: false
+
+jobs:
+  lauf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      HAS_KI: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Pakete installieren
+        run: pip install -r requirements.txt
+
+      - name: KI-Paket installieren (nur wenn ANTHROPIC_API_KEY gesetzt ist)
+        if: env.HAS_KI == 'true'
+        run: pip install "anthropic>=1,<2"
+
+      - name: Job-Alarm ausführen
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          AKTUELLE: ${{ inputs.aktuelle_senden }}
+          TROCKEN: ${{ inputs.trockenlauf }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          ARGS=""
+          if [ "$EVENT" = "workflow_dispatch" ]; then ARGS="$ARGS --force"; fi
+          if [ "$AKTUELLE" = "true" ]; then ARGS="$ARGS --recent-days 7"; fi
+          if [ "$TROCKEN" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          python -m jobalarm.main $ARGS
+
+      - name: Stand speichern (state/)
+        if: always() && inputs.trockenlauf != true
+        run: |
+          git config user.name "job-alarm-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/
+          if git diff --cached --quiet; then echo "Keine Änderungen."; exit 0; fi
+          git commit -q -m "Stand aktualisiert [skip ci]"
+          for i in 1 2 3 4; do
+            git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep $((i * 5))
+          done
+          echo "Push fehlgeschlagen" && exit 1

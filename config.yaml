@@ -1,0 +1,153 @@
+# =====================================================================
+#  Einstellungen für den Job-Alarm-Bot
+#  Du kannst diese Datei direkt auf github.com bearbeiten (Stift-Symbol).
+#  Zeilen mit # davor sind Kommentare und werden ignoriert.
+#  Wichtig: Einrückung (Leerzeichen am Zeilenanfang) nicht verändern!
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# Suchbegriffe für die Jobbörse der Arbeitsagentur (eine Abfrage pro Begriff)
+# ---------------------------------------------------------------------
+suche:
+  begriffe:
+    - Motion Designer
+    - Motion Design
+    - Rive
+    - Lottie
+    - Character Animator
+    - 2D Animator
+    - UI Animation
+    - Motion Graphics
+  ort: Berlin
+  umkreis_km: 40
+
+# ---------------------------------------------------------------------
+# Quellen ein-/ausschalten
+# ---------------------------------------------------------------------
+quellen:
+  arbeitsagentur:
+    aktiv: true
+    tage_zurueck: 7          # nur Anzeigen der letzten X Tage abfragen
+    homeoffice_bundesweit: true  # zusätzlich: Homeoffice-Stellen in ganz Deutschland
+    details_laden: true      # Beschreibung für interessante Treffer nachladen
+
+  # Indeed und LinkedIn über python-jobspy.
+  # Achtung: automatisches Auslesen kann gegen deren Nutzungsbedingungen
+  # verstoßen. Deshalb nur selten und mit wenigen Ergebnissen.
+  jobspy:
+    aktiv: true
+    alle_minuten: 120        # höchstens alle 2 Stunden abfragen
+    stunden_alt: 72          # nur Anzeigen der letzten 72 Stunden
+    ergebnisse_pro_abfrage: 15
+    pause_sekunden: [15, 40] # zufällige Pause zwischen zwei Abfragen
+    abfragen:
+      - seite: indeed
+        begriff: '"motion designer" OR "motion design" OR rive OR lottie OR "character animator"'
+        ort: Berlin
+        umkreis_meilen: 25
+      - seite: indeed
+        begriff: '"motion designer" OR "motion design" OR rive OR lottie OR "character animator"'
+        ort: ""
+        nur_remote: true
+      - seite: linkedin
+        begriff: '"motion designer" OR rive OR lottie OR "character animator"'
+        ort: Berlin, Germany
+        umkreis_meilen: 25
+      - seite: linkedin
+        begriff: '"motion designer" OR rive OR lottie OR "character animator"'
+        ort: Germany
+
+  # Arbeitnow: kostenlose Jobbörse mit offener Schnittstelle, sammelt v. a.
+  # Stellen von deutschen Tech-Firmen (Personio, Greenhouse, ...).
+  arbeitnow:
+    aktiv: true
+    seiten: 3                # die neuesten 3 x 100 Anzeigen
+
+  # Karriereseiten einzelner Firmen – Liste in firmen.yaml
+  firmen:
+    aktiv: true
+
+# ---------------------------------------------------------------------
+# Relevanz-Bewertung (Punktesystem)
+#   Titel-Treffer zählen am meisten. Pro Liste zählt jedes Stichwort einmal.
+#   "muster" ist ein Suchmuster (Groß-/Kleinschreibung egal, | heißt "oder").
+# ---------------------------------------------------------------------
+bewertung:
+  sofort_ab: 60              # ab so vielen Punkten: sofort aufs Handy
+  vielleicht_ab: 30          # ab so vielen Punkten: abends in die Sammelnachricht
+
+  titel:
+    - {muster: 'motion[ -]?design', punkte: 50, label: Motion Design}
+    - {muster: '\brive\b', punkte: 45, label: Rive}
+    - {muster: '\blottie\b', punkte: 40, label: Lottie}
+    - {muster: 'character[ -]?(animat|artist|design)', punkte: 45, label: Character Animation}
+    - {muster: '\banimator(in)?\b', punkte: 30, label: Animator}
+    - {muster: '\banimation', punkte: 25, label: Animation}
+    - {muster: '\bmotion\b(?![ -]?design)', punkte: 20, label: Motion}
+    - {muster: 'gamification', punkte: 25, label: Gamification}
+    - {muster: 'product design|ux design|ui design|ux/ui|ui/ux|interaction design|visual design', punkte: 15, label: Product/UX/UI}
+    - {muster: 'illustrat|2d artist|game artist', punkte: 10, label: Illustration/2D}
+
+  beschreibung:               # Stichworte im Anzeigentext (zusammen max. 40 Punkte)
+    max_punkte: 40
+    regeln:
+      - {muster: '\brive\b', punkte: 15, label: Rive}
+      - {muster: '\blottie', punkte: 12, label: Lottie}
+      - {muster: 'after ?effects', punkte: 8, label: After Effects}
+      - {muster: 'character', punkte: 8, label: Characters}
+      - {muster: 'gamification|gamified|spielerisch', punkte: 10, label: Gamification}
+      - {muster: 'mascot|maskottchen', punkte: 10, label: Maskottchen}
+      - {muster: 'micro-?interaction|mikrointeraktion', punkte: 8, label: Micro-Interactions}
+      - {muster: '\bspine\b|unity', punkte: 4, label: Spine/Unity}
+      - {muster: 'animation|animier', punkte: 5, label: Animation}
+      - {muster: '\bfigma\b', punkte: 3, label: Figma}
+
+  senior:                     # Pluspunkte für Seniorität
+    muster: 'senior|\blead\b|principal|staff|erfahren|experienced|\bsr\.?\b'
+    punkte: 10
+
+  ausschluss_titel:           # Diese Anzeigen werden nie gemeldet
+    - 'junior|\bjr\.?\b'
+    - 'praktik|intern\b|internship|werkstudent|working student|studentisch|trainee|azubi|ausbildung|volontär|volontariat|abschlussarbeit|thesis|minijob'
+    - 'cutter|videoschnitt|video ?editor|editor/in|schnittassistenz'
+    - 'social media|content creator|content producer|tiktok|ugc'
+    - 'freelance|freiberuf|freier mitarbeiter|auf honorarbasis'
+    - 'animateur|kinderanimation|freizeitanimat|hotelanimat|club ?animat'
+    - 'motion control|motion planning|motion software|bewegungstherap'
+    - 'mediengestalter.*(print|druck)|druckvorstufe'
+
+  ausschluss_beschreibung:    # nur für sehr eindeutige Fälle
+    - 'dies ist eine (praktikums|werkstudenten)stelle'
+
+  abzug_titel:                # Minuspunkte, aber kein Ausschluss
+    - {muster: '\bvideo', punkte: -15, label: Video}
+    - {muster: 'marketing', punkte: -10, label: Marketing}
+    - {muster: 'teilzeit|part[- ]?time', punkte: -10, label: Teilzeit}
+    - {muster: 'befristet|elternzeitvertretung|temporary', punkte: -5, label: befristet}
+
+  ort:
+    berlin: 10                # Arbeitsort Berlin
+    remote_de: 10             # Remote in Deutschland/EU
+    remote_unklar: 0          # Remote wird erwähnt, Region unklar
+    anderer_ort_de: -25       # nur vor Ort in einer anderen deutschen Stadt
+    ausland: -200             # Ausland ohne Remote -> praktisch Ausschluss
+
+# ---------------------------------------------------------------------
+# Benachrichtigungen
+# ---------------------------------------------------------------------
+benachrichtigung:
+  aktiv_von: "07:00"          # Uhrzeit Berlin
+  aktiv_bis: "22:30"
+  sammelnachricht_ab: "20:00" # "Vielleicht"-Treffer kommen ab dieser Uhrzeit gesammelt
+  max_sofort_pro_lauf: 10     # Rest wandert in die Sammelnachricht
+  warnung_nach_fehlern: 3     # Warnung, wenn eine Quelle so oft hintereinander scheitert
+
+# ---------------------------------------------------------------------
+# Optional: Bewertung mit KI (Claude). Standardmäßig AUS.
+# Kostet Geld (siehe README). Braucht zusätzlich das Secret ANTHROPIC_API_KEY.
+# ---------------------------------------------------------------------
+ki_bewertung:
+  aktiv: false
+  modell: claude-opus-5-5     # günstiger: claude-haiku-5-5
+  ab_punkten: 20              # nur Anzeigen ab so vielen Regel-Punkten prüfen
+  max_pro_lauf: 10

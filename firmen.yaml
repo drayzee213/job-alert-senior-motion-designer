@@ -1,0 +1,25 @@
+# =====================================================================
+#  Watchlist: Karriereseiten einzelner Firmen
+#  Der Bot liest die öffentlichen Stellen-Schnittstellen der Bewerbungssysteme.
+#
+#  Eine Firma hinzufügen – einfach einen Block kopieren und anpassen:
+#    - name: Firmenname (so steht er in der Nachricht)
+#      system: greenhouse | lever | ashby | personio | recruitee | smartrecruiters | workable | join | workday
+#      kennung: der Firmen-Name im Link des Bewerbungssystems, z. B.
+#          boards.greenhouse.io/DUOLINGO        -> system: greenhouse, kennung: duolingo
+#          jobs.lever.co/FIRMA                  -> system: lever
+#          jobs.ashbyhq.com/FIRMA               -> system: ashby
+#          FIRMA.jobs.personio.de               -> system: personio
+#          FIRMA.recruitee.com                  -> system: recruitee
+#          jobs.smartrecruiters.com/FIRMA       -> system: smartrecruiters
+#          apply.workable.com/FIRMA             -> system: workable
+#          join.com/companies/FIRMA             -> system: join
+#      notiz: frei, wird nicht ausgewertet
+#  Vorübergehend abschalten: Zeile "aktiv: false" ergänzen.
+#  Tipp: Workflow "Quellen prüfen" starten – dann siehst du, ob deine Firma funktioniert.
+# =====================================================================
+firmen:
+  - name: Duolingo
+    system: greenhouse
+    kennung: duolingo
+    notiz: Berlin-Office; Characters, Rive-Animationen
