@@ -6,7 +6,7 @@ import re
 from functools import lru_cache
 from typing import Any
 
-from .location import HYBRID_RE, classify_location
+from .location import FOREIGN_RE, HYBRID_RE, classify_location
 from .models import Job
 
 TAG_RE = re.compile(r"<[^>]+>")
@@ -53,20 +53,23 @@ def score_job(job: Job, cfg: dict[str, Any]) -> Job:
 
     # 2) Titel
     title_labels = []
+    strong_title = False
     for rule in rules.get("titel", []):
         if _rx(rule["muster"]).search(title):
             score += int(rule["punkte"])
             title_labels.append(rule["label"])
+            strong_title = strong_title or not rule.get("schwach")
     title_labels = _dedupe_labels(title_labels)
     if title_labels:
         reasons.append(", ".join(title_labels) + " im Titel")
 
     # 3) Beschreibung (gedeckelt)
     desc_cfg = rules.get("beschreibung", {})
-    desc_points, desc_labels = 0, []
+    desc_points, desc_labels, motion_in_desc = 0, [], False
     for rule in desc_cfg.get("regeln", []):
         if desc and _rx(rule["muster"]).search(desc):
             desc_points += int(rule["punkte"])
+            motion_in_desc = motion_in_desc or bool(rule.get("motion"))
             if rule["label"] not in title_labels:
                 desc_labels.append(rule["label"])
     desc_points = min(desc_points, int(desc_cfg.get("max_punkte", 40)))
@@ -88,6 +91,9 @@ def score_job(job: Job, cfg: dict[str, Any]) -> Job:
     # 6) Ort
     loc_points = rules.get("ort", {})
     kind, label = classify_location(job.location, job.remote, title, desc)
+    if (job.source == "arbeitsagentur" and job.location and kind in ("unbekannt", "ausland")
+            and not FOREIGN_RE.search(job.location)):
+        kind = "anderer_ort_de"  # Arbeitsagentur-Stellen ohne Auslandsbezug liegen in Deutschland
     job.location_label = label
     score += int(loc_points.get(kind, 0))
     if kind == "berlin":
@@ -102,8 +108,9 @@ def score_job(job: Job, cfg: dict[str, Any]) -> Job:
     elif kind == "ausland":
         reasons.append("Ausland")
 
-    # Ohne einen einzigen Fachbegriff (Titel oder Text) nie melden
-    if not title_labels and not desc_labels:
+    # Ohne starken Fachbegriff im Titel braucht es einen Motion-Bezug im Anzeigentext
+    # (z. B. "Product Designer" nur mit Rive/Lottie/Animation/Gamification ...)
+    if not strong_title and not motion_in_desc:
         score = min(score, 0)
 
     job.score = score

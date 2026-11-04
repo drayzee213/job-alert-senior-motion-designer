@@ -38,7 +38,15 @@ FOREIGN_RE = re.compile(
     r"china|shanghai|australia|sydney|brazil|são paulo|mexico|argentina|ukraine|kyiv|"
     r"serbia|belgrade|croatia|bulgaria|cyprus|malta|dubai|uae|new york|san francisco|"
     r"california|los angeles|seattle|austin|boston|chicago|pittsburgh|toronto|vancouver|"
-    r"montreal|latam|apac|americas|north america)\b",
+    r"montreal|latam|apac|americas|north america|vietnam|da nang|hanoi|ho chi minh|korea|seoul|"
+    r"taiwan|taipei|hong kong|philippines|manila|malaysia|kuala lumpur|thailand|bangkok|"
+    r"indonesia|jakarta|chile|santiago|colombia|bogot[aá]|peru|lima|egypt|cairo|morocco|"
+    r"tunisia|tunis|south africa|cape town|kenya|nigeria|pakistan|saudi|riyadh|qatar|doha|"
+    r"new zealand|auckland|nice|lyon|marseille|bordeaux|toulouse|lille|nantes|rotterdam|"
+    r"antwerp|luxembourg|belfast|edinburgh|manchester|glasgow|porto|valencia|sevilla|"
+    r"m[aá]laga|bucure[sș]ti|sofia|athens|limassol|tbilisi|yerevan|chennai|hyderabad|pune|"
+    r"mumbai|delhi|gurgaon|noida|beijing|shenzhen|osaka|melbourne|brisbane|quebec|"
+    r"ontario|texas|florida|new jersey|washington|denver|atlanta|miami|dallas|houston)\b",
     re.I,
 )
 # Homeoffice nur teilweise / nach Vereinbarung
@@ -92,4 +100,7 @@ def classify_location(location: str, remote_flag: bool | None = None, title: str
         return "ausland", loc or "Ausland"
     if not loc:
         return "unbekannt", "Ort nicht angegeben"
+    # "Stadt, Region, Land" ohne Deutschland-Bezug -> Ausland
+    if loc.count(",") >= 2 and not remote:
+        return "ausland", loc
     return "unbekannt", loc

@@ -75,29 +75,30 @@ bewertung:
   vielleicht_ab: 30          # ab so vielen Punkten: abends in die Sammelnachricht
 
   titel:
+    # "schwach: true" = zählt nur, wenn der Anzeigentext zusätzlich ein Motion-Stichwort enthält
     - {muster: 'motion[ -]?design', punkte: 50, label: Motion Design}
     - {muster: '\brive\b', punkte: 45, label: Rive}
     - {muster: '\blottie\b', punkte: 40, label: Lottie}
-    - {muster: 'character[ -]?(animat|artist|design)', punkte: 45, label: Character Animation}
+    - {muster: 'character[ -]?(animat|artist|design)|charakter[ -]?(animat|design)', punkte: 45, label: Character Animation}
     - {muster: '\banimator(in)?\b', punkte: 30, label: Animator}
     - {muster: '\banimation', punkte: 25, label: Animation}
     - {muster: '\bmotion\b(?![ -]?design)', punkte: 20, label: Motion}
     - {muster: 'gamification', punkte: 25, label: Gamification}
-    - {muster: 'product design|ux design|ui design|ux/ui|ui/ux|interaction design|visual design', punkte: 15, label: Product/UX/UI}
-    - {muster: 'illustrat|2d artist|game artist', punkte: 10, label: Illustration/2D}
+    - {muster: 'product design|ux design|ui design|ux/ui|ui/ux|interaction design|visual design', punkte: 15, label: Product/UX/UI, schwach: true}
+    - {muster: 'illustrat|2d artist|game artist', punkte: 10, label: Illustration/2D, schwach: true}
 
   beschreibung:               # Stichworte im Anzeigentext (zusammen max. 40 Punkte)
     max_punkte: 40
-    regeln:
-      - {muster: '\brive\b', punkte: 15, label: Rive}
-      - {muster: '\blottie', punkte: 12, label: Lottie}
-      - {muster: 'after ?effects', punkte: 8, label: After Effects}
-      - {muster: 'character', punkte: 8, label: Characters}
-      - {muster: 'gamification|gamified|spielerisch', punkte: 10, label: Gamification}
-      - {muster: 'mascot|maskottchen', punkte: 10, label: Maskottchen}
-      - {muster: 'micro-?interaction|mikrointeraktion', punkte: 8, label: Micro-Interactions}
-      - {muster: '\bspine\b|unity', punkte: 4, label: Spine/Unity}
-      - {muster: 'animation|animier', punkte: 5, label: Animation}
+    regeln:                   # "motion: true" = zählt als Motion-Bezug (siehe "schwach" oben)
+      - {muster: '\brive\b', punkte: 15, label: Rive, motion: true}
+      - {muster: '\blottie', punkte: 12, label: Lottie, motion: true}
+      - {muster: 'after ?effects', punkte: 8, label: After Effects, motion: true}
+      - {muster: 'character[ -]?(animation|design|rig)|charakter(animation|design)|animated characters?', punkte: 10, label: Character Animation, motion: true}
+      - {muster: 'gamification|gamified|spielerisch', punkte: 10, label: Gamification, motion: true}
+      - {muster: 'mascot|maskottchen', punkte: 10, label: Maskottchen, motion: true}
+      - {muster: 'micro-?interactions?|mikrointeraktion', punkte: 8, label: Micro-Interactions, motion: true}
+      - {muster: 'motion design|ui animation|animationen|\banimation(s)?\b', punkte: 5, label: Animation, motion: true}
+      - {muster: '\bspine\b|\bunity\b', punkte: 4, label: Spine/Unity}
       - {muster: '\bfigma\b', punkte: 3, label: Figma}
 
   senior:                     # Pluspunkte für Seniorität
@@ -110,7 +111,7 @@ bewertung:
     - 'cutter|videoschnitt|video ?editor|editor/in|schnittassistenz'
     - 'social media|content creator|content producer|tiktok|ugc'
     - 'freelance|freiberuf|freier mitarbeiter|auf honorarbasis'
-    - 'animateur|kinderanimation|freizeitanimat|hotelanimat|club ?animat'
+    - 'animateur|animatrice|kinderanimation|freizeitanimat|hotelanimat|club ?animat|d.animation|[ée]v[ée]nementiel'
     - 'motion control|motion planning|motion software|bewegungstherap'
     - 'mediengestalter.*(print|druck)|druckvorstufe'
 

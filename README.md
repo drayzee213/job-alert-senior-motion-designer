@@ -160,14 +160,16 @@ Die wichtigsten Stellen:
 | „Rive“ oder „Character Animation“ im Titel | je +45 |
 | „Lottie“ im Titel | +40 |
 | „Animator“ / „Animation“ / „Gamification“ im Titel | +30 / +25 / +25 |
-| „Motion“ allein, „Product/UX/UI Design“, „Illustration“ im Titel | +20 / +15 / +10 |
-| Stichworte im Anzeigentext (Rive, Lottie, After Effects, Characters, Maskottchen, Gamification, Micro-Interactions, Figma …) | zusammen höchstens +40 |
+| „Motion“ allein im Titel | +20 |
+| „Product/UX/UI Design“ / „Illustration“ im Titel – **zählt nur, wenn im Anzeigentext ein Motion-Stichwort steht** | +15 / +10 |
+| Stichworte im Anzeigentext (Rive, Lottie, After Effects, Character Animation, Maskottchen, Gamification, Micro-Interactions, Animation, Figma …) | zusammen höchstens +40 |
 | Senior / Lead / erfahren | +10 |
 | Berlin oder Remote in Deutschland/EU | +10 |
 | nur vor Ort in einer anderen deutschen Stadt | −25 |
 | Ausland ohne Remote | praktisch Ausschluss |
 | „Video“, „Marketing“, „Teilzeit“ im Titel | −15 / −10 / −10 |
 | Ausschlusswort im Titel (Junior, Praktikum, Cutter, …) | nie melden |
+| kein Fachbegriff im Titel und kein Motion-Stichwort im Text | nie melden |
 
 Beispiel „Senior Motion Designer – Character Animation & Rive“ (remote): 50 + 45 + 45 + 10
 \+ Stichworte = deutlich über 60 → sofort.

@@ -108,3 +108,42 @@ def test_ortsklassifikation(location, remote, expected):
 
 def test_plain_text_entfernt_html():
     assert plain_text("&lt;p&gt;Hallo &amp; <b>Welt</b>&lt;/p&gt;") == "Hallo & Welt"
+
+
+@pytest.mark.parametrize("title,description", [
+    # echte Fehltreffer aus dem Trockenlauf vom 04.11.2026
+    ("Senior Embedded Software Engineer (All Genders)", "Join our community. Strong character and Unity of purpose."),
+    ("Senior Manager - Global Product Ops Excellence (All Genders)", "community, characters"),
+    ("Sr. Product Designer", "Design systems in Figma for our data community."),
+])
+def test_keine_fehltreffer_durch_allgemeine_woerter(title, description):
+    assert score_job(make(title, description=description), CFG).category == "nein"
+
+
+def test_product_designer_braucht_motion_bezug():
+    ohne = score_job(make("Senior Product Designer", description="Figma, user research"), CFG)
+    mit = score_job(make("Senior Product Designer", description="Figma, Lottie and Rive animations"), CFG)
+    assert ohne.category == "nein"
+    assert mit.category in ("vielleicht", "sofort")
+
+
+@pytest.mark.parametrize("title,location", [
+    ("Lead Animator", "Da Nang, , Vietnam"),
+    ("Commerciale Responsable D'agence D'animation Evenementielle Enfants", "Nice"),
+    ("Senior Character Animator", "Montpellier, Occitanie, France"),
+])
+def test_ausland_wird_erkannt(title, location):
+    assert score_job(make(title, location=location), CFG).category == "nein"
+
+
+def test_arbeitsagentur_kleinstadt_gilt_als_deutschland():
+    job = make("Motion Designer", location="Müncheberg, Strausberg, Seelow")
+    job.source = "arbeitsagentur"
+    job = score_job(job, CFG)
+    assert job.location_label.startswith("Müncheberg")
+    assert any("vor Ort" in r for r in job.reasons)
+
+
+def test_character_animator_in_hamburg_kommt_in_sammelnachricht():
+    job = score_job(make("Character Animator", location="Hamburg, Hamburg, Germany"), CFG)
+    assert job.category == "vielleicht"

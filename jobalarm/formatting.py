@@ -35,7 +35,7 @@ def format_job(job: Job) -> str:
 
 
 def format_digest(jobs: list[Job]) -> str:
-    head = f"🌙 <b>Vielleicht interessant – {len(jobs)} Anzeige{'n' if len(jobs) != 1 else ''} von heute</b>"
+    head = f"🌙 <b>Vielleicht interessant – {len(jobs)} Anzeige{'n' if len(jobs) != 1 else ''}</b>"
     blocks = [head]
     for i, job in enumerate(jobs, 1):
         reason = reason_sentence(job)
