@@ -1,0 +1,25 @@
+name: Telegram prüfen
+
+# Manuell starten, wenn keine Nachrichten ankommen oder der Bot nicht auf Befehle reagiert.
+# Schickt eine Testnachricht und zeigt im Protokoll, was nicht stimmt (ohne geheime Werte).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pruefen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install requests==2.34.2
+      - name: Telegram prüfen
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m tools.telegram_check
