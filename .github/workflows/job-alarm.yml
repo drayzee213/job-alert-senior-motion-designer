@@ -11,6 +11,10 @@ on:
     - cron: "17,47 5-21 * * *"
   workflow_dispatch:
     inputs:
+      uebersicht:
+        description: "Alle aktuell passenden Stellen nach Relevanz schicken (wie /alle)"
+        type: boolean
+        default: false
       aktuelle_senden:
         description: "Passende Anzeigen der letzten 7 Tage einmal schicken"
         type: boolean
@@ -60,6 +64,7 @@ jobs:
           AKTUELLE: ${{ inputs.aktuelle_senden }}
           TROCKEN: ${{ inputs.trockenlauf }}
           ZEITPLAN: ${{ inputs.zeitplan }}
+          UEBERSICHT: ${{ inputs.uebersicht }}
           EVENT: ${{ github.event_name }}
         run: |
           ARGS=""
@@ -70,6 +75,7 @@ jobs:
           fi
           if [ "$AKTUELLE" = "true" ]; then ARGS="$ARGS --recent-days 7"; fi
           if [ "$TROCKEN" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          if [ "$UEBERSICHT" = "true" ]; then ARGS="$ARGS --uebersicht"; fi
           python -m jobalarm.main $ARGS
 
       - name: Stand speichern (state/)

@@ -201,3 +201,38 @@ def test_mindestabstand_verhindert_doppelte_abfrage(env, monkeypatch):
     main.main(["--force", "--min-abstand", "20"])
     assert calls == []  # gerade erst abgefragt -> nur Befehle
     assert any("Status Job-Alarm" in m for m in SENT)
+
+
+def test_alle_zeigt_bekannte_und_neue_nach_relevanz(env):
+    feed, dead = env
+    feed.append(job(1, "Motion Designer (m/w/d)", company="Alt A"))          # Berlin, ~60 P.
+    feed.append(job(2, "Character Animator", company="Alt B", location="Hamburg"))  # vielleicht
+    feed.append(job(3, "Senior Backend Engineer", company="Egal"))           # unpassend
+    run()  # erster Lauf: alles still
+    assert job_messages() == []
+    SENT.clear()
+    feed.append(job(4, "Senior Motion Designer – Rive", company="Neu C"))   # neu, stärkster Treffer
+    tot = job(5, "Senior Lottie Animator", company="Weg D")
+    dead.add(tot.url)
+    feed.append(tot)
+    FakeTelegram.pending = ["/alle"]
+    run()
+    lists = [m for m in SENT if m.startswith("📋")]
+    assert len(lists) == 1
+    text = lists[0]
+    assert text.index("Senior Motion Designer – Rive") < text.index("Motion Designer (m/w/d)") < text.index("Character Animator")
+    assert "🆕 <b>Senior Motion Designer – Rive" in text
+    assert "Backend" not in text and "Lottie" not in text
+    assert job_messages() == []  # neue Stelle nicht zusätzlich einzeln
+    SENT.clear()
+    run()  # danach wird die schon gelistete Stelle nicht noch einmal als neu gemeldet
+    assert job_messages() == []
+
+
+def test_alle_ohne_treffer(env):
+    feed, _ = env
+    feed.append(job(1, "Senior Backend Engineer"))
+    run()
+    SENT.clear()
+    run("--uebersicht")
+    assert any(m.startswith("📋") and "keine passende Stelle" in m for m in SENT)

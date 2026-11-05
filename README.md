@@ -163,6 +163,7 @@ Schreib deinem Bot einfach:
 
 | Befehl | Wirkung |
 |---|---|
+| `/alle` | **alle aktuell passenden Stellen**, nach Relevanz sortiert (bis zu 25), egal ob neu oder schon bekannt. Sucht dafür weiter zurück: Arbeitsagentur 30 Tage, Indeed/LinkedIn 14 Tage, Firmenseiten alles Aktuelle. ⭐ = starker Treffer, 🆕 = bisher nicht gemeldet |
 | `/status` | letzter Lauf, Treffer heute, welche Quellen funktionieren |
 | `/pause` | keine Meldungen mehr (z. B. im Urlaub) |
 | `/weiter` | wieder einschalten |
@@ -172,6 +173,8 @@ Wichtig: Der Bot hat keinen eigenen Server. Er liest deine Befehle erst beim **n
 Lauf**. Die Antwort kann also bis zu ca. 30 Minuten dauern (nachts, 22–7 Uhr, erst morgens).
 Sofort antworten geht nur mit einem dauerhaft laufenden Server, und der wäre nicht mehr kostenlos.
 Wenn du nicht warten willst: **Actions → Job-Alarm → Run workflow** startet sofort einen Lauf.
+Mit dem Häkchen „Alle aktuell passenden Stellen nach Relevanz schicken“ bekommst du dabei
+sofort dieselbe Liste wie mit `/alle`.
 
 ---
 

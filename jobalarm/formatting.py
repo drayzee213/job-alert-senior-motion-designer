@@ -52,6 +52,32 @@ def format_digest(jobs: list[Job]) -> str:
     return "\n\n".join(blocks)
 
 
+def format_overview(jobs: list[Job], new_uids: set[str], when: str, strong_from: int = 60) -> str:
+    if not jobs:
+        return (f"📋 <b>Aktuelle passende Stellen</b> (Stand {escape(when)})\n\n"
+                "Gerade habe ich keine passende Stelle gefunden. Ich melde mich, sobald eine erscheint.")
+    head = (f"📋 <b>Aktuelle passende Stellen – {len(jobs)} Treffer</b>\n"
+            f"Nach Relevanz sortiert · Stand {escape(when)}\n"
+            "⭐ = starker Treffer · 🆕 = bisher noch nicht gemeldet")
+    blocks = [head]
+    for i, job in enumerate(jobs, 1):
+        marks = ("⭐ " if job.score >= strong_from else "") + ("🆕 " if job.uid in new_uids else "")
+        reason = reason_sentence(job)
+        block = (
+            f"{i}. {marks}<b>{escape(job.title)}</b>\n"
+            f"   {escape(job.company or '?')} · {escape(job.location_label or job.location or '?')}\n"
+        )
+        if job.salary:
+            block += f"   💶 {escape(job.salary)}\n"
+        if reason:
+            block += f"   💡 {escape(reason)}\n"
+        posted = f" · {_date_de(job.posted)}" if job.posted else ""
+        block += (f'   <a href="{escape(job.url, quote=True)}">Zur Anzeige</a> · '
+                  f"{escape(job.source_label or job.source)}{posted} · {job.score} P.")
+        blocks.append(block)
+    return "\n\n".join(blocks)
+
+
 def format_warning(source: str, error: str, fails: int) -> str:
     return (
         f"⚠️ <b>Quelle gestört: {escape(source)}</b>\n"
@@ -105,6 +131,7 @@ def _source_line(name: str, info: dict[str, Any]) -> str:
 
 HELP_TEXT = (
     "🤖 <b>Job-Alarm – Befehle</b>\n"
+    "/alle – alle aktuell passenden Stellen, nach Relevanz sortiert\n"
     "/status – letzter Lauf, Treffer heute, Quellen\n"
     "/pause – keine Meldungen mehr, bis du /weiter schickst\n"
     "/weiter – wieder einschalten\n\n"

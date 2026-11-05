@@ -144,6 +144,15 @@ benachrichtigung:
   warnung_nach_fehlern: 3     # Warnung, wenn eine Quelle so oft hintereinander scheitert
 
 # ---------------------------------------------------------------------
+# Befehl /alle: alle aktuell passenden Stellen nach Relevanz (auch schon bekannte)
+# ---------------------------------------------------------------------
+uebersicht:
+  max_anzeigen: 25            # höchstens so viele Stellen in der Liste
+  tage_zurueck: 30            # Arbeitsagentur: Anzeigen der letzten 30 Tage
+  stunden_alt: 336            # Indeed/LinkedIn: Anzeigen der letzten 14 Tage
+  ergebnisse_pro_abfrage: 25  # Indeed/LinkedIn
+
+# ---------------------------------------------------------------------
 # Optional: Bewertung mit KI (Claude). Standardmäßig AUS.
 # Kostet Geld (siehe README). Braucht zusätzlich das Secret ANTHROPIC_API_KEY.
 # ---------------------------------------------------------------------

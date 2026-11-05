@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import os
 import sys
 import time
@@ -178,6 +179,8 @@ def run(args: argparse.Namespace) -> int:
             _safe_send(tg, "▶️ <b>Läuft wieder.</b> Neue Anzeigen kommen ab dem nächsten Lauf.")
         elif cmd == "/status":
             want_status = True
+        elif cmd in ("/alle", "/liste", "/jobs", "/uebersicht"):
+            args.uebersicht = True
         elif cmd in ("/start", "/hilfe", "/help"):
             _safe_send(tg, formatting.HELP_TEXT)
     if commands:
@@ -185,18 +188,22 @@ def run(args: argparse.Namespace) -> int:
 
     if state.status.get("paused"):
         log.append("⏸ Pausiert – keine Abfragen.")
+        if args.uebersicht:
+            _safe_send(tg, "⏸ Der Bot ist pausiert. Schick erst /weiter, dann /alle.")
         finish(state, tg, args, now, log, want_status, {})
         return 0
 
     # Zwei Auslöser (cron-job.org + GitHub-Zeitplan) sollen nicht doppelt abfragen
     last = state.status.get("last_fetch")
-    if args.min_abstand and last and now - datetime.fromisoformat(last) < timedelta(minutes=args.min_abstand):
+    if (args.min_abstand and not args.uebersicht and last
+            and now - datetime.fromisoformat(last) < timedelta(minutes=args.min_abstand)):
         log.append(f"⏭ Letzte Abfrage erst um {datetime.fromisoformat(last):%H:%M} – diesmal nur Befehle gelesen.")
         finish(state, tg, args, now, log, want_status, {})
         return 0
 
     # ---- 2) Quellen abfragen
-    jobs, errors, counts = collect(cfg, state, now, args.force, log)
+    fetch_cfg = overview_config(cfg) if args.uebersicht else cfg
+    jobs, errors, counts = collect(fetch_cfg, state, now, args.force or args.uebersicht, log)
     state.status["last_fetch"] = now.isoformat(timespec="minutes")
     update_source_health(state, errors, counts, cfg, tg, now)
 
@@ -248,6 +255,10 @@ def run(args: argparse.Namespace) -> int:
         source_is_new = job.feed not in seeded
         wanted = (not source_is_new and not is_resend) or (
             args.recent_days and is_recent(job, today, args.recent_days))
+        if args.uebersicht:
+            # Diesmal kommt alles in der sortierten Liste – nicht zusätzlich einzeln melden
+            state.remember(job.uid, fp, "liste", today)
+            continue
         if not wanted:
             state.remember(job.uid, fp, "still", today)
             silent += 1
@@ -286,6 +297,9 @@ def run(args: argparse.Namespace) -> int:
     if state.status["digest"] and (digest_due or args.recent_days):
         send_digest(state, tg, today, log)
 
+    if args.uebersicht:
+        send_overview(jobs, {j.uid for j in new_jobs}, state, cfg, tg, now, log)
+
     newly_seeded = sorted(name for name, err in errors.items() if err is None and name not in seeded)
     state.status["seeded_feeds"] = sorted(seeded | set(newly_seeded))
     if first_run:
@@ -308,6 +322,64 @@ def run(args: argparse.Namespace) -> int:
                f" · still gespeichert: {silent}")
     finish(state, tg, args, now, log, want_status, counts)
     return 0
+
+
+def overview_config(cfg: dict[str, Any]) -> dict[str, Any]:
+    """Für /alle: größeres Zeitfenster bei Arbeitsagentur, Indeed und LinkedIn."""
+    ov = cfg.get("uebersicht", {})
+    out = copy.deepcopy(cfg)
+    out["quellen"]["arbeitsagentur"]["tage_zurueck"] = int(ov.get("tage_zurueck", 30))
+    js = out["quellen"]["jobspy"]
+    js["stunden_alt"] = int(ov.get("stunden_alt", 336))
+    js["ergebnisse_pro_abfrage"] = int(ov.get("ergebnisse_pro_abfrage", 25))
+    return out
+
+
+def build_overview(jobs: list[Job], cfg: dict[str, Any], log: list[str]) -> list[Job]:
+    """Alle passenden Anzeigen (neu oder bekannt), ohne Duplikate und tote Links, nach Relevanz."""
+    ov = cfg.get("uebersicht", {})
+    unique: dict[str, Job] = {}
+    for job in jobs:
+        unique.setdefault(job.uid, job)
+    for job in unique.values():
+        score_job(job, cfg)
+    enriched = 0
+    for job in sorted(unique.values(), key=lambda j: j.score, reverse=True):
+        if (job.source == "arbeitsagentur" and job.score > 0 and not job.description
+                and enriched < MAX_ENRICH):
+            arbeitsagentur.enrich(job)
+            score_job(job, cfg)
+            enriched += 1
+            time.sleep(0.3)
+    ranked = sorted((j for j in unique.values() if j.category in ("sofort", "vielleicht")),
+                    key=lambda j: j.score, reverse=True)
+    chosen: list[Job] = []
+    fps: set[str] = set()
+    for job in ranked:
+        if len(chosen) >= int(ov.get("max_anzeigen", 25)):
+            break
+        fp = fingerprint(job.company, job.title)
+        if is_duplicate(fp, fps):
+            continue
+        status, why = linkcheck.check(job)
+        if status == linkcheck.DEAD:
+            log.append(f"🪦 Übersicht: toter Link entfernt: {job.title} ({why})")
+            continue
+        fps.add(fp)
+        chosen.append(job)
+    return chosen
+
+
+def send_overview(jobs: list[Job], new_uids: set[str], state: State, cfg: dict[str, Any],
+                  tg: Telegram, now: datetime, log: list[str]) -> None:
+    chosen = build_overview(jobs, cfg, log)
+    _safe_send(tg, formatting.format_overview(chosen, new_uids, now.strftime("%d.%m.%Y %H:%M"),
+                                              int(cfg["bewertung"].get("sofort_ab", 60))))
+    # Was jetzt in der Liste stand, nicht abends noch einmal schicken
+    shown = {j.uid for j in chosen}
+    state.status["digest"] = [d for d in state.status["digest"]
+                              if f"{d.get('source')}:{d.get('source_id')}" not in shown]
+    log.append(f"📋 Übersicht mit {len(chosen)} Anzeigen gesendet")
 
 
 def send_digest(state: State, tg: Telegram, today: str, log: list[str]) -> None:
@@ -363,6 +435,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--force", action="store_true", help="Zeitfenster ignorieren (für manuelle Läufe)")
     p.add_argument("--recent-days", type=int, default=0,
                    help="passende Anzeigen der letzten N Tage einmal schicken")
+    p.add_argument("--uebersicht", action="store_true",
+                   help="alle aktuell passenden Anzeigen (neu oder bekannt) nach Relevanz schicken")
     p.add_argument("--min-abstand", type=int, default=0,
                    help="nur abfragen, wenn die letzte Abfrage mindestens so viele Minuten her ist")
     return run(p.parse_args(argv))
