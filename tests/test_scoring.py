@@ -184,3 +184,13 @@ def test_maskottchen_allein_reicht_nicht_ohne_fachbegriff_im_titel():
     job = score_job(make("Senior Customer Success Manager", location="Remote-Germany",
                          description="Our mascot loves data."), CFG)
     assert job.category == "nein"
+
+
+@pytest.mark.parametrize("location,label", [
+    ("Berlin, Berlin, Germany", "Berlin"),
+    ("Berlin, BE, Germany", "Berlin"),
+    ("Berlin (Homeoffice möglich)", "Berlin (Homeoffice möglich)"),
+    ("Potsdam, Brandenburg, Germany", "Potsdam"),
+])
+def test_berlin_label_kurz(location, label):
+    assert classify_location(location)[1] == label

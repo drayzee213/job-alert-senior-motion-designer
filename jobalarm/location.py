@@ -87,9 +87,12 @@ def classify_location(location: str, remote_flag: bool | None = None, title: str
     foreign_remote = bool(FOREIGN_REMOTE_RE.search(text))
 
     if berlin:
-        if remote and not HYBRID_RE.search(loc) and not REMOTE_RE.search(loc):
-            return "berlin", f"{loc} (auch Remote)"
-        return "berlin", loc or "Berlin"
+        city = "Berlin" if re.search(r"(?i)\bberlin\b", loc) else loc.split(",")[0].strip()
+        if HYBRID_RE.search(loc):
+            return "berlin", f"{city} (Homeoffice möglich)"
+        if remote:
+            return "berlin", f"{city} (auch Remote)"
+        return "berlin", city
     if HYBRID_RE.search(loc) and not remote_flag:
         # z. B. "Hamburg (Homeoffice möglich)": meist nur teilweise Homeoffice -> vor Ort nötig
         return "hybrid_anderer_ort", loc
