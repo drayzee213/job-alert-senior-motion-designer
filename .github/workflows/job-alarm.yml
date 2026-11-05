@@ -4,7 +4,10 @@ on:
   schedule:
     # Zeiten in UTC. 5–21 Uhr UTC deckt 7–22 Uhr Berlin im Sommer und Winter ab;
     # das genaue Zeitfenster prüft der Bot selbst (config.yaml -> benachrichtigung).
-    # Krumme Minuten (:17 und :47), weil zur vollen Stunde viele Läufe warten.
+    # Krumme Minuten, weil zur vollen Stunde viele Läufe warten.
+    # ACHTUNG: GitHub führt Zeitpläne oft stark verspätet oder gar nicht aus. Zuverlässig
+    # wird es mit dem externen Auslöser cron-job.org (siehe README). Dieser Zeitplan ist
+    # dann nur noch die Reserve; doppelte Abfragen verhindert der Bot selbst.
     - cron: "17,47 5-21 * * *"
   workflow_dispatch:
     inputs:
@@ -14,6 +17,10 @@ on:
         default: false
       trockenlauf:
         description: "Trockenlauf (nichts senden, nichts speichern)"
+        type: boolean
+        default: false
+      zeitplan:
+        description: "Nur für den automatischen Auslöser (cron-job.org) – nicht ankreuzen"
         type: boolean
         default: false
 
@@ -52,10 +59,15 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           AKTUELLE: ${{ inputs.aktuelle_senden }}
           TROCKEN: ${{ inputs.trockenlauf }}
+          ZEITPLAN: ${{ inputs.zeitplan }}
           EVENT: ${{ github.event_name }}
         run: |
           ARGS=""
-          if [ "$EVENT" = "workflow_dispatch" ]; then ARGS="$ARGS --force"; fi
+          if [ "$EVENT" = "schedule" ] || [ "$ZEITPLAN" = "true" ]; then
+            ARGS="$ARGS --min-abstand 20"   # automatischer Lauf: Zeitfenster beachten
+          else
+            ARGS="$ARGS --force"            # von Hand gestartet: sofort laufen
+          fi
           if [ "$AKTUELLE" = "true" ]; then ARGS="$ARGS --recent-days 7"; fi
           if [ "$TROCKEN" = "true" ]; then ARGS="$ARGS --dry-run"; fi
           python -m jobalarm.main $ARGS

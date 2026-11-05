@@ -147,3 +147,16 @@ def test_arbeitsagentur_kleinstadt_gilt_als_deutschland():
 def test_character_animator_in_hamburg_kommt_in_sammelnachricht():
     job = score_job(make("Character Animator", location="Hamburg, Hamburg, Germany"), CFG)
     assert job.category == "vielleicht"
+
+
+def test_fachfremder_titel_mit_gamification_im_text_ist_kein_treffer():
+    # Fehltreffer vom 05.11.2026 (Amplitude)
+    job = score_job(make("Senior Customer Success Manager - DACH & North",
+                         description="Help customers with gamification, animations and Figma dashboards."), CFG)
+    assert job.category == "nein"
+
+
+def test_fachfremder_titel_mit_rive_und_lottie_im_text_bleibt_moeglich():
+    job = score_job(make("Senior Creative Technologist",
+                         description="Build interactive Rive and Lottie animations with After Effects."), CFG)
+    assert job.category in ("vielleicht", "sofort")

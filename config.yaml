@@ -89,13 +89,15 @@ bewertung:
 
   beschreibung:               # Stichworte im Anzeigentext (zusammen max. 40 Punkte)
     max_punkte: 40
-    regeln:                   # "motion: true" = zählt als Motion-Bezug (siehe "schwach" oben)
-      - {muster: '\brive\b', punkte: 15, label: Rive, motion: true}
-      - {muster: '\blottie', punkte: 12, label: Lottie, motion: true}
+    # "motion: true" = zählt als Motion-Bezug (siehe "schwach" oben)
+    # "spezifisch: true" = reicht allein, damit eine Anzeige ohne Fachbegriff im Titel zählt
+    regeln:
+      - {muster: '\brive\b', punkte: 15, label: Rive, motion: true, spezifisch: true}
+      - {muster: '\blottie', punkte: 12, label: Lottie, motion: true, spezifisch: true}
       - {muster: 'after ?effects', punkte: 8, label: After Effects, motion: true}
-      - {muster: 'character[ -]?(animation|design|rig)|charakter(animation|design)|animated characters?', punkte: 10, label: Character Animation, motion: true}
+      - {muster: 'character[ -]?(animation|design|rig)|charakter(animation|design)|animated characters?', punkte: 10, label: Character Animation, motion: true, spezifisch: true}
       - {muster: 'gamification|gamified|spielerisch', punkte: 10, label: Gamification, motion: true}
-      - {muster: 'mascot|maskottchen', punkte: 10, label: Maskottchen, motion: true}
+      - {muster: 'mascot|maskottchen', punkte: 10, label: Maskottchen, motion: true, spezifisch: true}
       - {muster: 'micro-?interactions?|mikrointeraktion', punkte: 8, label: Micro-Interactions, motion: true}
       - {muster: 'motion design|ui animation|animationen|\banimation(s)?\b', punkte: 5, label: Animation, motion: true}
       - {muster: '\bspine\b|\bunity\b', punkte: 4, label: Spine/Unity}

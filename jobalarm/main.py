@@ -188,8 +188,16 @@ def run(args: argparse.Namespace) -> int:
         finish(state, tg, args, now, log, want_status, {})
         return 0
 
+    # Zwei Auslöser (cron-job.org + GitHub-Zeitplan) sollen nicht doppelt abfragen
+    last = state.status.get("last_fetch")
+    if args.min_abstand and last and now - datetime.fromisoformat(last) < timedelta(minutes=args.min_abstand):
+        log.append(f"⏭ Letzte Abfrage erst um {datetime.fromisoformat(last):%H:%M} – diesmal nur Befehle gelesen.")
+        finish(state, tg, args, now, log, want_status, {})
+        return 0
+
     # ---- 2) Quellen abfragen
     jobs, errors, counts = collect(cfg, state, now, args.force, log)
+    state.status["last_fetch"] = now.isoformat(timespec="minutes")
     update_source_health(state, errors, counts, cfg, tg, now)
 
     # ---- 3) Neue Anzeigen bewerten
@@ -295,7 +303,8 @@ def run(args: argparse.Namespace) -> int:
     elif newly_seeded and silent:
         log.append(f"🌱 Neue Quellen still übernommen: {', '.join(newly_seeded)} ({silent} Anzeigen)")
 
-    log.append(f"Neu: {len(new_jobs)} · sofort gesendet: {sent_now} · vielleicht: {len(to_digest)}"
+    log.append(f"Abgerufen: {len(jobs)} · davon neu und thematisch passend: "
+               f"{sum(1 for j in new_jobs if j.score > 0)} · sofort gesendet: {sent_now} · vielleicht: {len(to_digest)}"
                f" · still gespeichert: {silent}")
     finish(state, tg, args, now, log, want_status, counts)
     return 0
@@ -354,6 +363,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--force", action="store_true", help="Zeitfenster ignorieren (für manuelle Läufe)")
     p.add_argument("--recent-days", type=int, default=0,
                    help="passende Anzeigen der letzten N Tage einmal schicken")
+    p.add_argument("--min-abstand", type=int, default=0,
+                   help="nur abfragen, wenn die letzte Abfrage mindestens so viele Minuten her ist")
     return run(p.parse_args(argv))
 
 

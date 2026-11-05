@@ -189,3 +189,15 @@ def test_gestoerte_quelle_beim_ersten_lauf_flutet_spaeter_nicht(env):
     FAILING.clear()
     run()  # Indeed antwortet jetzt -> alte Anzeige still übernehmen
     assert job_messages() == []
+
+
+def test_mindestabstand_verhindert_doppelte_abfrage(env, monkeypatch):
+    feed, _ = env
+    run()
+    calls = []
+    real = main.collect
+    monkeypatch.setattr(main, "collect", lambda *a, **k: calls.append(1) or real(*a, **k))
+    FakeTelegram.pending = ["/status"]
+    main.main(["--force", "--min-abstand", "20"])
+    assert calls == []  # gerade erst abgefragt -> nur Befehle
+    assert any("Status Job-Alarm" in m for m in SENT)

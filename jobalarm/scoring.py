@@ -65,11 +65,12 @@ def score_job(job: Job, cfg: dict[str, Any]) -> Job:
 
     # 3) Beschreibung (gedeckelt)
     desc_cfg = rules.get("beschreibung", {})
-    desc_points, desc_labels, motion_in_desc = 0, [], False
+    desc_points, desc_labels, motion_in_desc, specific_in_desc = 0, [], False, False
     for rule in desc_cfg.get("regeln", []):
         if desc and _rx(rule["muster"]).search(desc):
             desc_points += int(rule["punkte"])
             motion_in_desc = motion_in_desc or bool(rule.get("motion"))
+            specific_in_desc = specific_in_desc or bool(rule.get("spezifisch"))
             if rule["label"] not in title_labels:
                 desc_labels.append(rule["label"])
     desc_points = min(desc_points, int(desc_cfg.get("max_punkte", 40)))
@@ -111,6 +112,10 @@ def score_job(job: Job, cfg: dict[str, Any]) -> Job:
     # Ohne starken Fachbegriff im Titel braucht es einen Motion-Bezug im Anzeigentext
     # (z. B. "Product Designer" nur mit Rive/Lottie/Animation/Gamification ...)
     if not strong_title and not motion_in_desc:
+        score = min(score, 0)
+    # Ganz ohne Fachbegriff im Titel (z. B. "Customer Success Manager") nur bei sehr
+    # eindeutigen Stichworten im Text (Rive, Lottie, Character Animation, Maskottchen)
+    if not title_labels and not specific_in_desc:
         score = min(score, 0)
 
     job.score = score

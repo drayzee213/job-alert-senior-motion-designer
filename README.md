@@ -104,12 +104,56 @@ Die Namen müssen genau so geschrieben sein (Großbuchstaben, Unterstrich).
 4. Grünen Knopf **Run workflow** drücken. Nach 1–3 Minuten bekommst du in Telegram
    „✅ Job-Alarm ist eingerichtet“.
 
-Fertig. Ab jetzt läuft der Bot von selbst.
+Danach fehlt noch Schritt 5. Ohne ihn läuft der Bot nur unzuverlässig.
 
-> **Hinweis zum Zeitplan:** GitHub startet geplante Läufe nicht immer pünktlich. Oft kommen
-> sie 5–20 Minuten später, an vollen Tagen fällt auch mal einer aus. Ein Treffer kommt
-> deshalb meist innerhalb von 30–60 Minuten nach Veröffentlichung – immer noch deutlich
-> schneller als die Mail-Alerts der Portale.
+### Schritt 5: Zuverlässiger Zeitplan mit cron-job.org (kostenlos)
+
+GitHubs eigener Zeitplan ist **sehr unzuverlässig**. In der ersten Nacht kam statt
+~30 Läufen genau einer, nachts um 2:30 Uhr. Deshalb stößt ein kostenloser
+externer Dienst, **cron-job.org**, den Bot pünktlich alle 30 Minuten an. GitHubs Zeitplan
+bleibt als Reserve aktiv. Doppelte Abfragen verhindert der Bot selbst.
+
+**5a. Einen Schlüssel bei GitHub erstellen, der nur den Bot starten darf**
+
+1. github.com → oben rechts auf dein **Profilbild** → **Settings**.
+2. Links ganz unten **Developer settings** → **Personal access tokens** →
+   **Fine-grained tokens** → **Generate new token**.
+3. **Token name:** `cron-job` · **Expiration:** die längste angebotene Zeit
+   (am besten eine Kalender-Erinnerung zum Erneuern setzen).
+4. **Repository access:** **Only select repositories** → `job-alert-senior-motion-designer`.
+5. **Permissions** → **Repository permissions** → bei **Actions** auf **Read and write** stellen.
+   Sonst nichts ändern.
+6. Ganz unten **Generate token**. Der Schlüssel beginnt mit `github_pat_`. Kopiere ihn und
+   füge ihn **nur** gleich bei cron-job.org ein, nirgendwo sonst. Er kann nur in diesem einen
+   Repository Workflows starten, sonst nichts.
+
+**5b. cron-job.org einrichten**
+
+1. https://cron-job.org öffnen → **Sign up** (kostenlos) → E-Mail bestätigen → einloggen.
+2. Unter **Settings** die Zeitzone **Europe/Berlin** einstellen, falls sie nicht schon gesetzt ist.
+3. **Cronjobs** → **Create cronjob**:
+   - **Title:** `Job-Alarm`
+   - **URL:**
+     `https://api.github.com/repos/drayzee213/job-alert-senior-motion-designer/actions/workflows/job-alarm.yml/dispatches`
+   - **Execution schedule:** *Custom* → Minuten **17** und **47**, Stunden **7 bis 22**,
+     alle Tage, alle Monate, alle Wochentage. Wenn ein Feld für einen „Crontab“-Ausdruck
+     angeboten wird: `17,47 7-22 * * *`
+4. Reiter **Advanced**:
+   - **Request method:** `POST`
+   - **Headers** (jeweils „Add header“):
+     | Key | Value |
+     |---|---|
+     | `Accept` | `application/vnd.github+json` |
+     | `Authorization` | `Bearer ` + dein Schlüssel (also `Bearer github_pat_…`, mit Leerzeichen) |
+     | `X-GitHub-Api-Version` | `2022-11-28` |
+     | `Content-Type` | `application/json` |
+   - **Request body:** `{"ref":"main","inputs":{"zeitplan":"true"}}`
+5. **Create** bzw. **Save**. Dann beim Cronjob **Test run** (oder „Execute now“) klicken.
+   **Status 204** (oder 200) heißt: Es klappt. Unter **Actions** startet sofort ein Lauf.
+   Bei **401** stimmt der Schlüssel nicht, bei **404** die URL oder die Berechtigung (5a, Schritt 5).
+
+Fertig. Ein Treffer kommt jetzt meist innerhalb von 30 Minuten nach Veröffentlichung.
+Das ist deutlich schneller als die Mail-Alerts der Portale.
 
 ---
 
@@ -126,6 +170,8 @@ Schreib deinem Bot einfach:
 
 Wichtig: Der Bot hat keinen eigenen Server. Er liest deine Befehle erst beim **nächsten
 Lauf**. Die Antwort kann also bis zu ca. 30 Minuten dauern (nachts, 22–7 Uhr, erst morgens).
+Sofort antworten geht nur mit einem dauerhaft laufenden Server, und der wäre nicht mehr kostenlos.
+Wenn du nicht warten willst: **Actions → Job-Alarm → Run workflow** startet sofort einen Lauf.
 
 ---
 
@@ -276,8 +322,11 @@ Arbeitsagentur, Arbeitnow und die Firmen-Schnittstellen sind öffentlich dafür 
 
 - **Kurz pausieren:** `/pause` an den Bot schicken, später `/weiter`.
 - **Ganz abschalten:** Repository → **Actions** → links **Job-Alarm** → rechts oben **„…“** →
-  **Disable workflow**. Zum Wiedereinschalten dort **Enable workflow**.
+  **Disable workflow**. Zum Wiedereinschalten dort **Enable workflow**. Bei cron-job.org den
+  Cronjob ebenfalls deaktivieren (Schalter in der Liste), sonst meldet er dort Fehler.
 - **Für immer löschen:** Repository → **Settings** → ganz unten **Delete this repository**.
+  Den Cronjob bei cron-job.org löschen und den GitHub-Schlüssel `cron-job` unter
+  Settings → Developer settings → Fine-grained tokens löschen.
   Danach in Telegram beim @BotFather `/deletebot` schicken, oder mit `/revoke` das Token
   ungültig machen.
 
@@ -292,6 +341,8 @@ Arbeitsagentur, Arbeitnow und die Firmen-Schnittstellen sind öffentlich dafür 
 | `Telegram sendMessage: HTTP 400 chat not found` | Chat-ID falsch, oder du hast dem Bot noch nicht geschrieben (Starten drücken). |
 | `HTTP 401 Unauthorized` | Token falsch. Beim BotFather `/token` → neues Token holen und Secret ersetzen. |
 | Warnung „Quelle gestört: LinkedIn“ | Normal, LinkedIn blockt manchmal. Der Bot macht mit den anderen Quellen weiter. |
+| Bot meldet sich stundenlang nicht, `/status` bleibt unbeantwortet | Unter **Actions** schauen, ob überhaupt Läufe stattfinden. Wenn nicht: cron-job.org prüfen (Schritt 5). Läuft der Cronjob mit Fehler 401, ist der Schlüssel abgelaufen → neuen erstellen (5a) und bei cron-job.org ersetzen. |
+| Unsicher, ob Token/Chat-ID stimmen | **Actions → Telegram prüfen → Run workflow**. Schickt eine Testnachricht und zeigt im Protokoll, was nicht stimmt. |
 | Geplante Läufe hören auf | Unter **Actions** steht evtl. „This scheduled workflow is disabled …“ → **Enable workflow**. |
 | Zu viele / zu wenige Treffer | In `config.yaml` `sofort_ab` / `vielleicht_ab` anpassen oder Ausschlusswörter ergänzen. |
 
