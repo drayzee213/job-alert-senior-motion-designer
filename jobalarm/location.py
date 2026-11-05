@@ -92,6 +92,8 @@ def classify_location(location: str, remote_flag: bool | None = None, title: str
             else "Remote (Region nicht angegeben)"
     if remote and foreign and german:
         return "remote_unklar", _remote_label(loc)
+    if german and re.fullmatch(r"(?i)\s*(germany|deutschland|de)\s*", loc):
+        return "unbekannt", "Deutschland (Ort nicht genauer angegeben)"
     if german:
         if REMOTE_RE.search(description or ""):
             return "remote_unklar", f"{loc} (Remote evtl. möglich)"

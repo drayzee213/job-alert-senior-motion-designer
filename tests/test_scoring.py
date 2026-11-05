@@ -101,6 +101,7 @@ def test_rive_nicht_in_anderen_woertern():
     ("London, UK", None, "ausland"),
     ("Remote (US)", True, "ausland"),
     ("", None, "unbekannt"),
+    ("Germany", None, "unbekannt"),
 ])
 def test_ortsklassifikation(location, remote, expected):
     assert classify_location(location, remote)[0] == expected
@@ -160,3 +161,9 @@ def test_fachfremder_titel_mit_rive_und_lottie_im_text_bleibt_moeglich():
     job = score_job(make("Senior Creative Technologist",
                          description="Build interactive Rive and Lottie animations with After Effects."), CFG)
     assert job.category in ("vielleicht", "sofort")
+
+
+def test_maskottchen_allein_reicht_nicht_ohne_fachbegriff_im_titel():
+    job = score_job(make("Senior Customer Success Manager", location="Remote-Germany",
+                         description="Our mascot loves data."), CFG)
+    assert job.category == "nein"

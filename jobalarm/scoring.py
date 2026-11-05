@@ -93,7 +93,7 @@ def score_job(job: Job, cfg: dict[str, Any]) -> Job:
     loc_points = rules.get("ort", {})
     kind, label = classify_location(job.location, job.remote, title, desc)
     if (job.source == "arbeitsagentur" and job.location and kind in ("unbekannt", "ausland")
-            and not FOREIGN_RE.search(job.location)):
+            and not FOREIGN_RE.search(job.location) and not label.startswith("Deutschland")):
         kind = "anderer_ort_de"  # Arbeitsagentur-Stellen ohne Auslandsbezug liegen in Deutschland
     job.location_label = label
     score += int(loc_points.get(kind, 0))
