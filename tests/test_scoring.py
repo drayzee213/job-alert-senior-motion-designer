@@ -57,12 +57,27 @@ def test_unpassender_job_ohne_fachbegriff():
     assert job.score <= 0
 
 
-def test_anderer_ort_ohne_remote_ist_schwaecher():
-    berlin = score_job(make("Motion Designer (m/w/d)", location="Berlin"), CFG)
-    muenchen = score_job(make("Motion Designer (m/w/d)", location="München"), CFG)
-    assert berlin.score - muenchen.score == 35
-    assert berlin.category == "vielleicht" or berlin.category == "sofort"
-    assert muenchen.category == "nein"
+@pytest.mark.parametrize("location", ["München", "Hamburg, Hamburg, Germany",
+                                      "Neckarsulm (Homeoffice möglich)",
+                                      "Düsseldorf, Hamburg (Homeoffice möglich)"])
+def test_andere_stadt_wird_nie_gemeldet(location):
+    job = score_job(make("Senior Motion Designer (m/w/d)", location=location,
+                         description="Rive, Lottie, After Effects"), CFG)
+    assert job.category == "nein"
+
+
+@pytest.mark.parametrize("location", ["Berlin", "Potsdam", "Berlin (Homeoffice möglich)",
+                                      "Berlin, München", "Teltow"])
+def test_berlin_und_umland(location):
+    job = score_job(make("Motion Designer (m/w/d)", location=location), CFG)
+    assert job.category == "sofort"
+
+
+def test_andere_stadt_mit_remote_im_text_bleibt_moeglich():
+    job = score_job(make("Senior Motion Designer", location="Konstanz",
+                         description="Remote möglich. After Effects, Rive."), CFG)
+    assert job.category in ("vielleicht", "sofort")
+    assert any("falls wirklich Remote" in r for r in job.reasons)
 
 
 def test_ausland_ohne_remote_wird_nie_gemeldet():
@@ -93,11 +108,12 @@ def test_rive_nicht_in_anderen_woertern():
     ("Remote", True, "remote_unklar"),
     ("Remote - Germany", None, "remote_de"),
     ("Hamburg (Homeoffice möglich)", True, "remote_de"),
-    ("Hamburg (Homeoffice möglich)", None, "remote_unklar"),
     ("Berlin (Homeoffice möglich)", None, "berlin"),
     ("Deutschland", True, "remote_de"),
     ("Remote, EMEA", None, "remote_de"),
     ("München", None, "anderer_ort_de"),
+    ("Hamburg (Homeoffice möglich)", None, "hybrid_anderer_ort"),
+    ("Potsdam", None, "berlin"),
     ("London, UK", None, "ausland"),
     ("Remote (US)", True, "ausland"),
     ("", None, "unbekannt"),
@@ -137,17 +153,18 @@ def test_ausland_wird_erkannt(title, location):
     assert score_job(make(title, location=location), CFG).category == "nein"
 
 
-def test_arbeitsagentur_kleinstadt_gilt_als_deutschland():
+def test_arbeitsagentur_kleinstadt_gilt_als_deutschland_und_faellt_raus():
     job = make("Motion Designer", location="Müncheberg, Strausberg, Seelow")
     job.source = "arbeitsagentur"
     job = score_job(job, CFG)
     assert job.location_label.startswith("Müncheberg")
     assert any("vor Ort" in r for r in job.reasons)
+    assert job.category == "nein"
 
 
-def test_character_animator_in_hamburg_kommt_in_sammelnachricht():
+def test_character_animator_in_hamburg_wird_nicht_gemeldet():
     job = score_job(make("Character Animator", location="Hamburg, Hamburg, Germany"), CFG)
-    assert job.category == "vielleicht"
+    assert job.category == "nein"
 
 
 def test_fachfremder_titel_mit_gamification_im_text_ist_kein_treffer():

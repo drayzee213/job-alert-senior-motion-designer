@@ -130,8 +130,8 @@ def test_vielleicht_kommt_in_die_sammelnachricht(env, monkeypatch):
     monkeypatch.setattr(main, "_hm", lambda text: (24, 0) if text == "20:00" else real_hm(text))
     run()
     SENT.clear()
-    feed.append(job(1, "Motion Designer (m/w/d)", location="München",
-                    description="Wir arbeiten mit Rive und After Effects."))
+    feed.append(job(1, "Senior Product Designer (m/w/d)", location="Berlin",
+                    description="Wir arbeiten mit Figma und Animationen."))
     run()
     assert job_messages() == []
     st = state_mod.State()
@@ -139,7 +139,7 @@ def test_vielleicht_kommt_in_die_sammelnachricht(env, monkeypatch):
     # Abends wird gesammelt verschickt
     monkeypatch.setattr(main, "_hm", lambda text: (0, 0) if text == "20:00" else real_hm(text))
     run()
-    assert any(m.startswith("🌙") and "Motion Designer" in m for m in SENT)
+    assert any(m.startswith("🌙") and "Product Designer" in m for m in SENT)
     assert state_mod.State().status["digest"] == []
 
 
@@ -206,7 +206,9 @@ def test_mindestabstand_verhindert_doppelte_abfrage(env, monkeypatch):
 def test_alle_zeigt_bekannte_und_neue_nach_relevanz(env):
     feed, dead = env
     feed.append(job(1, "Motion Designer (m/w/d)", company="Alt A"))          # Berlin, ~60 P.
-    feed.append(job(2, "Character Animator", company="Alt B", location="Hamburg"))  # vielleicht
+    feed.append(job(2, "Senior Product Designer", company="Alt B",
+                    description="Animationen in Figma"))  # vielleicht
+    feed.append(job(6, "Character Animator", company="Weit E", location="Hamburg"))  # andere Stadt
     feed.append(job(3, "Senior Backend Engineer", company="Egal"))           # unpassend
     run()  # erster Lauf: alles still
     assert job_messages() == []
@@ -220,7 +222,9 @@ def test_alle_zeigt_bekannte_und_neue_nach_relevanz(env):
     lists = [m for m in SENT if m.startswith("📋")]
     assert len(lists) == 1
     text = lists[0]
-    assert text.index("Senior Motion Designer – Rive") < text.index("Motion Designer (m/w/d)") < text.index("Character Animator")
+    assert (text.index("Senior Motion Designer – Rive") < text.index("Motion Designer (m/w/d)")
+            < text.index("Senior Product Designer"))
+    assert "Hamburg" not in text
     assert "🆕 <b>Senior Motion Designer – Rive" in text
     assert "Backend" not in text and "Lottie" not in text
     assert job_messages() == []  # neue Stelle nicht zusätzlich einzeln

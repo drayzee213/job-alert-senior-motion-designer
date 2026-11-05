@@ -127,12 +127,14 @@ bewertung:
     - {muster: 'teilzeit|part[- ]?time', punkte: -10, label: Teilzeit}
     - {muster: 'befristet|elternzeitvertretung|temporary', punkte: -5, label: befristet}
 
-  ort:
-    berlin: 10                # Arbeitsort Berlin
+  ort:                        # -200 = praktisch ausgeschlossen
+    berlin: 10                # Berlin oder Berliner Umland (Potsdam, Teltow, Schönefeld ...)
     remote_de: 10             # Remote in Deutschland/EU
-    remote_unklar: 0          # Remote wird erwähnt, Region unklar
-    anderer_ort_de: -25       # nur vor Ort in einer anderen deutschen Stadt
-    ausland: -200             # Ausland ohne Remote -> praktisch Ausschluss
+    remote_unklar: 0          # "Remote", aber Region nicht angegeben
+    remote_im_text: -10       # andere Stadt, im Anzeigentext steht aber etwas von Remote
+    hybrid_anderer_ort: -200  # andere Stadt mit "Homeoffice möglich" (meist nur teilweise)
+    anderer_ort_de: -200      # nur vor Ort in einer anderen deutschen Stadt
+    ausland: -200             # Ausland ohne Remote
 
 # ---------------------------------------------------------------------
 # Benachrichtigungen

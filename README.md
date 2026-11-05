@@ -213,9 +213,10 @@ Die wichtigsten Stellen:
 | „Product/UX/UI Design“ / „Illustration“ im Titel – **zählt nur, wenn im Anzeigentext ein Motion-Stichwort steht** | +15 / +10 |
 | Stichworte im Anzeigentext (Rive, Lottie, After Effects, Character Animation, Maskottchen, Gamification, Micro-Interactions, Animation, Figma …) | zusammen höchstens +40 |
 | Senior / Lead / erfahren | +10 |
-| Berlin oder Remote in Deutschland/EU | +10 |
-| nur vor Ort in einer anderen deutschen Stadt | −25 |
-| Ausland ohne Remote | praktisch Ausschluss |
+| Berlin/Berliner Umland (Potsdam, Teltow, Schönefeld …) oder Remote in Deutschland/EU | +10 |
+| andere Stadt, aber im Text steht etwas von Remote (bitte prüfen) | −10 |
+| andere Stadt vor Ort, auch mit „Homeoffice möglich“ (meist nur teilweise) | nie melden |
+| Ausland ohne Remote | nie melden |
 | „Video“, „Marketing“, „Teilzeit“ im Titel | −15 / −10 / −10 |
 | Ausschlusswort im Titel (Junior, Praktikum, Cutter, …) | nie melden |
 | kein Fachbegriff im Titel und kein Motion-Stichwort im Text | nie melden |

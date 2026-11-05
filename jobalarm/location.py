@@ -8,7 +8,13 @@ REMOTE_RE = re.compile(
     r"mobiles arbeiten|mobile work|work from home|\bwfh\b|distributed|fully remote|100 ?% remote",
     re.I,
 )
-BERLIN_RE = re.compile(r"\bberlin\b", re.I)
+# Berlin und Umland (gut pendelbar)
+BERLIN_RE = re.compile(
+    r"\bberlin\b|potsdam|teltow|kleinmachnow|stahnsdorf|sch[öo]nefeld|falkensee|bernau|"
+    r"oranienburg|hennigsdorf|k[öo]nigs ?wusterhausen|ludwigsfelde|hoppegarten|erkner|wildau|"
+    r"dahlewitz|blankenfelde|mahlow|gro(ß|ss)beeren|werder \(havel\)",
+    re.I,
+)
 GERMANY_RE = re.compile(
     r"germany|deutschland|\bdeu\b|\bde\b|bundesweit|\bdach\b|"
     r"europe|europa|\beu\b|\bemea\b|\bcet\b|\bcest\b|worldwide|weltweit|global|anywhere",
@@ -69,7 +75,8 @@ def classify_location(location: str, remote_flag: bool | None = None, title: str
                       description: str = "") -> tuple[str, str]:
     """Gibt (Kategorie, lesbares Label) zurück.
 
-    Kategorien: berlin, remote_de, remote_unklar, anderer_ort_de, ausland, unbekannt
+    Kategorien: berlin, remote_de, remote_unklar, remote_im_text, hybrid_anderer_ort,
+    anderer_ort_de, ausland, unbekannt
     """
     loc = (location or "").strip()
     text = f"{loc} {title}"
@@ -80,11 +87,12 @@ def classify_location(location: str, remote_flag: bool | None = None, title: str
     foreign_remote = bool(FOREIGN_REMOTE_RE.search(text))
 
     if berlin:
-        if HYBRID_RE.search(loc):
-            return "berlin", loc
-        return "berlin", ("Berlin (auch Remote)" if remote else "Berlin") if loc else "Berlin"
-    if remote and german and HYBRID_RE.search(loc) and not remote_flag:
-        return "remote_unklar", loc
+        if remote and not HYBRID_RE.search(loc) and not REMOTE_RE.search(loc):
+            return "berlin", f"{loc} (auch Remote)"
+        return "berlin", loc or "Berlin"
+    if HYBRID_RE.search(loc) and not remote_flag:
+        # z. B. "Hamburg (Homeoffice möglich)": meist nur teilweise Homeoffice -> vor Ort nötig
+        return "hybrid_anderer_ort", loc
     if remote and not foreign_remote and (german or not foreign):
         if german:
             return "remote_de", _remote_label(loc)
@@ -96,7 +104,7 @@ def classify_location(location: str, remote_flag: bool | None = None, title: str
         return "unbekannt", "Deutschland (Ort nicht genauer angegeben)"
     if german:
         if REMOTE_RE.search(description or ""):
-            return "remote_unklar", f"{loc} (Remote evtl. möglich)"
+            return "remote_im_text", f"{loc} (Remote laut Text evtl. möglich)"
         return "anderer_ort_de", loc
     if foreign or foreign_remote:
         return "ausland", loc or "Ausland"

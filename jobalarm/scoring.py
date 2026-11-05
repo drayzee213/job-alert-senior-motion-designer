@@ -98,14 +98,17 @@ def score_job(job: Job, cfg: dict[str, Any]) -> Job:
     job.location_label = label
     score += int(loc_points.get(kind, 0))
     if kind == "berlin":
-        reasons.append("in Berlin")
+        reasons.append("in Berlin" if re.search(r"(?i)\bberlin\b", job.location or "Berlin")
+                       else "Berliner Umland")
     elif kind == "remote_de":
         reasons.append("Remote")
     elif kind == "remote_unklar":
         reasons.append("Homeoffice teilweise möglich" if HYBRID_RE.search(label)
                        else "Remote möglich (Region prüfen)")
-    elif kind == "anderer_ort_de":
-        reasons.append(f"Achtung: vor Ort in {job.location}")
+    elif kind == "remote_im_text":
+        reasons.append("nicht Berlin – nur passend, falls wirklich Remote (bitte prüfen)")
+    elif kind in ("anderer_ort_de", "hybrid_anderer_ort"):
+        reasons.append(f"vor Ort in {job.location}")
     elif kind == "ausland":
         reasons.append("Ausland")
 
