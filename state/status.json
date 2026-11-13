@@ -1,32 +1,10 @@
 {
- "digest": [
-  {
-   "ai_note": "",
-   "category": "vielleicht",
-   "company": "Jobgether",
-   "description": "",
-   "feed": "LinkedIn",
-   "location": "Germany",
-   "location_label": "Deutschland (Ort nicht genauer angegeben)",
-   "posted": "2026-11-13",
-   "reasons": [
-    "Motion Design im Titel"
-   ],
-   "remote": false,
-   "salary": null,
-   "score": 50,
-   "source": "linkedin",
-   "source_id": "li-4489545614",
-   "source_label": "LinkedIn",
-   "title": "Motion Designer",
-   "url": "https://www.linkedin.com/jobs/view/4489545614"
-  }
- ],
- "digest_date": "2026-11-12",
+ "digest": [],
+ "digest_date": "2026-11-13",
  "heartbeat": "2026-11-13",
  "initialized_at": "2026-11-04T22:16+01:00",
- "last_fetch": "2026-11-13T14:09+01:00",
- "last_jobspy_run": "2026-11-13T14:09+01:00",
+ "last_fetch": "2026-11-13T21:30+01:00",
+ "last_jobspy_run": "2026-11-13T21:30+01:00",
  "paused": false,
  "seeded_feeds": [
   "Arbeitnow",
@@ -59,214 +37,216 @@
   "Indeed",
   "LinkedIn"
  ],
- "seen_count": 49,
+ "seen_count": 50,
  "sources": {
   "Arbeitnow": {
    "alerted": false,
    "fails": 0,
    "last_count": 900,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Arbeitsagentur": {
    "alerted": false,
    "fails": 0,
    "last_count": 6,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma ANTON": {
    "alerted": false,
    "fails": 0,
    "last_count": 7,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Babbel": {
    "alerted": false,
    "fails": 0,
    "last_count": 10,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Clue": {
    "alerted": false,
    "fails": 0,
    "last_count": 0,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Delivery Hero": {
    "alerted": false,
    "fails": 0,
    "last_count": 878,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Duolingo": {
    "alerted": false,
    "fails": 0,
    "last_count": 61,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Figma": {
    "alerted": false,
    "fails": 0,
-   "last_count": 143,
+   "last_count": 140,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma GameDuell": {
    "alerted": false,
    "fails": 0,
    "last_count": 2,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma GetYourGuide": {
    "alerted": false,
    "fails": 0,
    "last_count": 0,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Goodgame Studios": {
    "alerted": false,
    "fails": 0,
    "last_count": 1,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma HelloBetter": {
    "alerted": false,
    "fails": 0,
    "last_count": 0,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma InnoGames": {
    "alerted": false,
    "fails": 0,
    "last_count": 6,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Knowunity": {
    "alerted": false,
    "fails": 0,
    "last_count": 5,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Kolibri Games": {
    "alerted": false,
    "fails": 0,
-   "last_count": 5,
+   "last_count": 4,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma N26": {
    "alerted": false,
    "fails": 0,
    "last_count": 34,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Oviva": {
    "alerted": false,
    "fails": 0,
    "last_count": 31,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Rive": {
    "alerted": false,
    "fails": 0,
    "last_count": 0,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma StudySmarter": {
    "alerted": false,
    "fails": 0,
    "last_count": 4,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Trade Republic": {
    "alerted": false,
    "fails": 0,
    "last_count": 39,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Travian Games": {
    "alerted": false,
    "fails": 0,
    "last_count": 0,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Ubisoft": {
    "alerted": false,
    "fails": 0,
-   "last_count": 290,
+   "last_count": 293,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Wooga": {
    "alerted": false,
    "fails": 0,
    "last_count": 5,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma YAZIO": {
    "alerted": false,
    "fails": 0,
-   "last_count": 4,
+   "last_count": 3,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma Yager": {
    "alerted": false,
    "fails": 0,
    "last_count": 0,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma simpleclub": {
    "alerted": false,
    "fails": 0,
    "last_count": 2,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Firma sofatutor": {
    "alerted": false,
    "fails": 0,
    "last_count": 3,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "Indeed": {
    "alerted": false,
    "fails": 0,
-   "last_count": 5,
+   "last_count": 6,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   },
   "LinkedIn": {
    "alerted": false,
    "fails": 0,
-   "last_count": 23,
+   "last_count": 22,
    "last_error": null,
-   "last_ok": "2026-11-13T14:09+01:00"
+   "last_ok": "2026-11-13T21:30+01:00"
   }
  },
  "tg_offset": 845178886,
  "today": {
-  "date": "2026-11-13"
+  "date": "2026-11-13",
+  "sofort": 1,
+  "vielleicht": 1
  }
 }
